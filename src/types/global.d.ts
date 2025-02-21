@@ -50,6 +50,7 @@ declare global {
         _id: string,
         name: string,
         email: string,
+        avatar: string;
         role: string,
         createdAt: Date,
         updatedAt: Date,
