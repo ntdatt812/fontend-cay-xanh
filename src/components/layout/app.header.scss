@@ -1,0 +1,80 @@
+.menu-icon {
+    font-size: 24px;
+    cursor: pointer;
+    display: block;
+
+    @media (min-width: 768px) {
+        display: none; // Ẩn trên màn hình lớn hơn 768px (Desktop)
+    }
+}
+
+.app-header {
+    background-color: #f6fcf7;
+    padding: 10px 20px;
+    border-bottom: 2px solid #e3f2e1;
+
+    .header-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .header-logo {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+
+        .logo-image {
+            height: 50px;
+            width: auto;
+        }
+    }
+
+    .header-nav {
+        display: flex;
+        gap: 20px;
+
+        @media (max-width: 767px) {
+            display: none;
+            /* Ẩn menu trên mobile */
+            flex-direction: column;
+            position: absolute;
+            top: 60px;
+            left: 0;
+            width: 100%;
+            background: #fff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 10px 0;
+        }
+
+        .nav-link {
+            font-size: 16px;
+            font-weight: 500;
+            color: #0056b3;
+            text-decoration: none;
+            padding: 10px;
+            display: block;
+            text-align: center;
+            transition: color 0.3s ease-in-out;
+
+            &:hover {
+                color: #ff6600;
+            }
+        }
+    }
+
+    .header-actions {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        .user-info {
+            cursor: pointer;
+        }
+    }
+}
+
+/* Hiển thị menu khi mở trên mobile */
+.menu-open .header-nav {
+    display: flex;
+}
