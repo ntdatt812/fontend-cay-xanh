@@ -1,14 +1,14 @@
-import { getUserAPI } from '@/services/api';
+import { deleteUserAPI, getUserAPI } from '@/services/api';
 import { dateRangeValidate } from '@/services/helper';
 import { DeleteTwoTone, EditTwoTone, PlusOutlined } from '@ant-design/icons';
 import type { ActionType, ProColumns } from '@ant-design/pro-components';
 import { ProTable } from '@ant-design/pro-components';
-import { Button } from 'antd';
+import { App, Button, Popconfirm } from 'antd';
 import { useRef, useState } from 'react';
 import DetailUser from './detail.user';
-
-
-
+import CreateUser from './create.user';
+import UpdateUser from './update.user';
+import dayjs from 'dayjs';
 
 
 type TSearch = {
@@ -29,6 +29,29 @@ const TableUser = () => {
     });
     const [openViewDetail, setOpenViewDetail] = useState<boolean>(false);
     const [dataViewDetail, setDataViewDetail] = useState<IUserTable | null>(null);
+
+    const [openModalCreate, setOpenModalCreate] = useState<boolean>(false);
+
+    const [openModalUpdate, setOpenModalUpdate] = useState<boolean>(false);
+    const [dataUpdate, setDataUpdate] = useState<IUserTable | null>(null);
+    const [isDeleteUser, setIsDeleteUser] = useState<boolean>(false);
+    const { message, notification } = App.useApp()
+
+
+    const handleDeleteUser = async (_id: string) => {
+        setIsDeleteUser(true)
+        const res = await deleteUserAPI(_id);
+        if (res && res.data) {
+            message.success('Xóa user thành công');
+            refreshTable();
+        } else {
+            notification.error({
+                message: 'Đã có lỗi xảy ra',
+                description: res.message
+            })
+        }
+        setIsDeleteUser(false)
+    }
 
     const columns: ProColumns<IUserTable>[] = [
         {
@@ -70,12 +93,27 @@ const TableUser = () => {
             dataIndex: 'createdAt',
             hideInSearch: true,
             valueType: "date",
-            sorter: true
+            sorter: true,
+            render(dom, entity, index, action, schema) {
+                return (
+                    <>
+                        {dayjs(entity.createdAt).format("DD-MM-YYYY")}
+                    </>
+                )
+            },
         },
         {
             title: 'Updated At',
             dataIndex: 'updatedAt',
             hideInSearch: true,
+            valueType: "date",
+            render(dom, entity, index, action, schema) {
+                return (
+                    <>
+                        {dayjs(entity.updatedAt).format("DD-MM-YYYY")}
+                    </>
+                )
+            },
         },
         {
             title: 'Action',
@@ -86,17 +124,36 @@ const TableUser = () => {
                         <EditTwoTone
                             twoToneColor="#f57800"
                             style={{ cursor: "pointer", marginRight: 15 }}
+                            onClick={() => {
+                                setDataUpdate(entity);
+                                setOpenModalUpdate(true);
+                            }}
                         />
-                        <DeleteTwoTone
-                            twoToneColor="#ff4d4f"
-                            style={{ cursor: "pointer" }}
-                        />
+                        <Popconfirm
+                            placement="leftTop"
+                            title={"Xác nhận xóa user"}
+                            description={`Bạn có chắc chắn muốn xóa ${entity.name} không ?`}
+                            onConfirm={() => handleDeleteUser(entity._id)}
+                            okText="Xác nhận"
+                            cancelText="Hủy"
+                            okButtonProps={{ loading: isDeleteUser }}
+                        >
+                            <span style={{ cursor: "pointer", marginLeft: 20 }}>
+                                <DeleteTwoTone
+                                    twoToneColor="#ff4d4f"
+                                    style={{ cursor: "pointer" }}
+                                />
+                            </span>
+                        </Popconfirm>
                     </>
-
                 )
             }
         },
     ];
+
+    const refreshTable = () => {
+        actionRef.current?.reload();
+    }
 
     return (
         <>
@@ -123,9 +180,14 @@ const TableUser = () => {
                             query += `&createdAt>=${createDateRange[0]}&createdAt<=${createDateRange[1]}`
                         }
                     }
+                    //default
+                    query += `&sort=-createdAt`;
+
                     if (sort && sort.createdAt) {
                         query += `&sort=${sort.createdAt === "ascend" ? "createdAt" : "-createdAt"}`
                     }
+
+
                     const res = await getUserAPI(query);
                     if (res.data) {
                         setMeta(res.data.meta);
@@ -155,7 +217,7 @@ const TableUser = () => {
                         key="button"
                         icon={<PlusOutlined />}
                         onClick={() => {
-                            actionRef.current?.reload();
+                            setOpenModalCreate(true);
                         }}
                         type="primary"
                     >
@@ -169,6 +231,18 @@ const TableUser = () => {
                 setOpenViewDetail={setOpenViewDetail}
                 dataViewDetail={dataViewDetail}
                 setDataViewDetail={setDataViewDetail}
+            />
+            <CreateUser
+                openModalCreate={openModalCreate}
+                setOpenModalCreate={setOpenModalCreate}
+                refreshTable={refreshTable}
+            />
+            <UpdateUser
+                openModalUpdate={openModalUpdate}
+                setOpenModalUpdate={setOpenModalUpdate}
+                refreshTable={refreshTable}
+                setDataUpdate={setDataUpdate}
+                dataUpdate={dataUpdate}
             />
         </>
     );

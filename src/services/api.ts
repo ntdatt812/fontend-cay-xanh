@@ -24,3 +24,21 @@ export const getUserAPI = (query: string) => {
     const urlBackend = `/api/v1/users?${query}`;
     return axios.get<IBackendRes<IModelPaginate<IUserTable>>>(urlBackend)
 }
+
+export const createUserAPI = (name: string, email: string,
+    password: string) => {
+    const urlBackend = "/api/v1/users";
+    return axios.post<IBackendRes<IRegister>>(urlBackend,
+        { name, email, password })
+}
+
+export const updateUserAPI = (_id: string, name: string, email: string) => {
+    const urlBackend = "/api/v1/users";
+    return axios.patch<IBackendRes<IRegister>>(urlBackend,
+        { _id, name, email })
+}
+
+export const deleteUserAPI = (_id: string) => {
+    const urlBackend = `/api/v1/users/${_id}`;
+    return axios.delete<IBackendRes<IRegister>>(urlBackend)
+}
