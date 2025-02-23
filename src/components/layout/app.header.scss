@@ -78,3 +78,19 @@
 .menu-open .header-nav {
     display: flex;
 }
+
+.nav-link {
+    color: #333;
+    text-decoration: none;
+    padding: 5px 10px;
+    transition: color 0.3s;
+
+    &:hover {
+        color: #1890ff;
+    }
+}
+
+.nav-link.active {
+    color: #1890ff;
+    border-bottom: 2px solid #1890ff;
+}

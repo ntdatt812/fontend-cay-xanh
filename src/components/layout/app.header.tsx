@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { Dropdown, Avatar, Space, Drawer, Divider, App } from 'antd';
 import { UserOutlined, MenuOutlined } from '@ant-design/icons';
 import { useCurrentApp } from 'components/context/app.context';
@@ -43,9 +43,13 @@ const AppHeader = () => {
                     {/* Menu Desktop */}
                     <nav className="header-nav">
                         {menuItems.map((item) => (
-                            <Link key={item.key} to={item.key} className="nav-link">
+                            <NavLink
+                                key={item.key}
+                                to={item.key}
+                                className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}
+                            >
                                 {item.label}
-                            </Link>
+                            </NavLink>
                         ))}
                     </nav>
 

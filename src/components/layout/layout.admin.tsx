@@ -93,7 +93,6 @@ const LayoutAdmin = () => {
     ];
 
     const urlAvatar = `${import.meta.env.VITE_BACKEND_URL}/images/avatar/${user?.avatar}`;
-    console.log(">>>check url", urlAvatar)
     //chỉ return trang chặn khi người dùng cố tình truy cập vào
     if (isAuthenticated === false) {
         return (

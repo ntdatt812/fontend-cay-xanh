@@ -1,7 +1,9 @@
+import TableTree from "@/components/admin/tree/table.tree";
+
 const ManageTreePage = () => {
     return (
         <div>
-            ManageTreePage
+            <TableTree />
         </div>
     )
 }

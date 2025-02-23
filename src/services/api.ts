@@ -42,3 +42,48 @@ export const deleteUserAPI = (_id: string) => {
     const urlBackend = `/api/v1/users/${_id}`;
     return axios.delete<IBackendRes<IRegister>>(urlBackend)
 }
+
+export const getTreesAPI = (query: string) => {
+    const urlBackend = `/api/v1/trees?${query}`;
+    return axios.get<IBackendRes<IModelPaginate<ITreeTable>>>(urlBackend)
+}
+export const uploadFileAPI = (fileImg: any, folder: string) => {
+    const bodyFormData = new FormData();
+    bodyFormData.append('fileUpload', fileImg);
+    return axios<IBackendRes<{
+        fileName: string
+    }>>({
+        method: 'post',
+        url: '/api/v1/files/upload',
+        data: bodyFormData,
+        headers: {
+            "Content-Type": "multipart/form-data",
+            "folder_type": folder
+        },
+    });
+}
+
+export const createTreeAPI = (tencayxanh: string, chieucao: number, hientrang: string, hinhanh: string,
+    khuvuc: string, lat: string, lng: string, mota: string, namtrong: number, sohieu: string) => {
+    const urlBackend = "/api/v1/trees";
+    return axios.post<IBackendRes<IRegister>>(urlBackend,
+        {
+            tencayxanh, chieucao, hientrang, hinhanh,
+            khuvuc, lat, lng, mota, namtrong, sohieu
+        })
+}
+
+export const updateTreeAPI = (_id: string, tencayxanh: string, chieucao: number, hientrang: string, hinhanh: string,
+    khuvuc: string, lat: string, lng: string, mota: string, namtrong: number, sohieu: string) => {
+    const urlBackend = `/api/v1/trees/${_id}`;
+    return axios.patch<IBackendRes<IRegister>>(urlBackend,
+        {
+            tencayxanh, chieucao, hientrang, hinhanh,
+            khuvuc, lat, lng, mota, namtrong, sohieu
+        })
+}
+
+export const deleteTreeAPI = (_id: string) => {
+    const urlBackend = `/api/v1/trees/${_id}`;
+    return axios.delete<IBackendRes<IRegister>>(urlBackend)
+}
