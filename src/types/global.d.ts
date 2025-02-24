@@ -56,7 +56,7 @@ declare global {
         updatedAt: Date,
     }
 
-    export interface ITreeTable {
+    interface ITreeTable {
         _id: string;
         tencayxanh: string;
         khuvuc: string,

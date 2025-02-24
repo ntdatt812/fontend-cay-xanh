@@ -34,7 +34,7 @@ const router = createBrowserRouter([
         element: <TreeMapPage />,
       },
       {
-        path: "/tree",
+        path: "/tree/:id",
         element: <TreePage />,
       },
       {

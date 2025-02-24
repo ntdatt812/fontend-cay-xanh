@@ -87,3 +87,8 @@ export const deleteTreeAPI = (_id: string) => {
     const urlBackend = `/api/v1/trees/${_id}`;
     return axios.delete<IBackendRes<IRegister>>(urlBackend)
 }
+
+export const getAllTreesWithoutPaginateAPI = () => {
+    const urlBackend = `/api/v1/trees/all`;
+    return axios.get<IBackendRes<ITreeTable[]>>(urlBackend)
+}

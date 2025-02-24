@@ -25,9 +25,9 @@ const AppHeader = () => {
 
     const menuItems = [
         { label: <Link to="/">Trang Chủ</Link>, key: '' },
-        { label: <Link to="/category">Danh Mục</Link>, key: 'category' },
+        // { label: <Link to="/category">Danh Mục</Link>, key: 'category' },
         { label: <Link to="/treemap">Bản Đồ Cây Xanh</Link>, key: 'treemap' },
-        { label: <Link to="/statistics">Thống Kê</Link>, key: 'stats' },
+        // { label: <Link to="/statistics">Thống Kê</Link>, key: 'stats' },
         { label: <Link to="/feedback">Ý Kiến - Phản Ánh</Link>, key: 'feedback' },
     ];
 
@@ -56,7 +56,7 @@ const AppHeader = () => {
                     {/* User Actions */}
                     <div className="header-actions">
                         {!isAuthenticated ? (
-                            <span onClick={() => navigate('/login')}>Đăng nhập</span>
+                            <span style={{ cursor: "pointer" }} onClick={() => navigate('/login')}>Đăng nhập</span>
                         ) : (
                             <Dropdown
                                 menu={{
