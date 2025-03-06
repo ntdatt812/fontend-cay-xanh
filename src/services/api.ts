@@ -92,3 +92,8 @@ export const getAllTreesWithoutPaginateAPI = () => {
     const urlBackend = `/api/v1/trees/all`;
     return axios.get<IBackendRes<ITreeTable[]>>(urlBackend)
 }
+
+export const getTreeByIdAPI = (_id: string) => {
+    const urlBackend = `/api/v1/trees/${_id}`;
+    return axios.get<IBackendRes<ITreeTable>>(urlBackend)
+}

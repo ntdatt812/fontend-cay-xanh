@@ -5,7 +5,7 @@ const MapLayers = () => {
         <LayersControl position="topright">
             <LayersControl.BaseLayer checked name="Bản đồ đường phố">
                 <TileLayer
-                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> Trường Đại học Hồng Đức'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                     maxZoom={22}
                 />

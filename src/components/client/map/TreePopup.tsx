@@ -9,7 +9,6 @@ export interface ITreeTable {
     namtrong: number;
     sohieu: string;
     hientrang: string;
-    // Các trường khác nếu cần
 }
 
 interface TreePopupProps {

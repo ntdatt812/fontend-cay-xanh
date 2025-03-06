@@ -72,4 +72,18 @@ declare global {
         createdAt: string;
         updatedAt: string;
     }
+
+    interface ITreeDetail {
+        _id: string;
+        tencayxanh: string;
+        khuvuc: string;
+        lat: string;
+        lng: string;
+        chieucao: number;
+        namtrong: number;
+        mota: string;
+        hinhanh: string;
+        sohieu: string;
+        hientrang: string;
+    }
 }

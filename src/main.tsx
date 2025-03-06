@@ -19,6 +19,7 @@ import LayoutAdmin from 'components/layout/layout.admin';
 import TreeMapPage from './pages/client/treemap';
 import TreePage from './pages/client/tree';
 import enUS from 'antd/locale/en_US';
+import ManageFeedbackPage from './pages/admin/manage.feedback';
 
 const router = createBrowserRouter([
   {
@@ -67,14 +68,14 @@ const router = createBrowserRouter([
           </ProtectedRoute>
         )
       },
-      // {
-      //   path: "order",
-      //   element: (
-      //     <ProtectedRoute>
-      //       <ManageOrderPage />
-      //     </ProtectedRoute>
-      //   )
-      // },
+      {
+        path: "feedback",
+        element: (
+          <ProtectedRoute>
+            <ManageFeedbackPage />
+          </ProtectedRoute>
+        )
+      },
       {
         path: "user",
         element: (
@@ -83,14 +84,14 @@ const router = createBrowserRouter([
           </ProtectedRoute>
         ),
       },
-      {
-        path: "/admin",
-        element: (
-          <ProtectedRoute>
-            <div>admin page</div>
-          </ProtectedRoute>
-        ),
-      },
+      // {
+      //   path: "/admin",
+      //   element: (
+      //     <ProtectedRoute>
+      //       <div>admin page</div>
+      //     </ProtectedRoute>
+      //   ),
+      // },
 
     ]
   },

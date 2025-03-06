@@ -12,9 +12,8 @@ const MapWrapper = () => {
     useEffect(() => {
         const fetchTrees = async () => {
             try {
-                // Thay 'API_URL_HERE' bằng URL API của bạn trả về danh sách cây
                 const res = await getAllTreesWithoutPaginateAPI()
-                console.log(">>> check res: ", res.data)
+
                 if (res && res.data) {
                     setTrees(res.data);
                 }

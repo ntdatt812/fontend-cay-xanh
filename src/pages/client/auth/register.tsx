@@ -17,7 +17,6 @@ const RegisterPage = () => {
     const navigate = useNavigate();
 
     const onFinish: FormProps<FieldType>['onFinish'] = async (values) => {
-        // console.log(">>>check values", values)
         setIsSubmit(true);
         const { email, name, password } = values;
         const res = await registerAPI(name, email, password);
