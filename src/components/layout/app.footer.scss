@@ -5,7 +5,7 @@
     background: linear-gradient(135deg, #81C784, #388E3C);
     color: white;
     text-align: center;
-    padding: 50px 20px;
+    padding: 40px 15px; // Giảm padding để gọn hơn trên mobile
     font-family: 'Poppins', sans-serif;
     overflow: hidden;
     box-shadow: 0 -6px 20px rgba(0, 0, 0, 0.1);
@@ -18,11 +18,20 @@
     top: -30px;
     left: 0;
     width: 100%;
+    height: auto;
+
+    svg {
+        width: 100%;
+        height: auto;
+        display: block;
+    }
 }
 
 .footer-content {
     max-width: 650px;
-    margin: auto;
+    margin: 0 auto; // Sửa lại để căn giữa chính xác
+    position: relative; // Đảm bảo nội dung nằm trên sóng
+    z-index: 1;
 }
 
 .footer-logo {
@@ -31,12 +40,12 @@
     align-items: center;
     font-size: 24px;
     font-weight: 600;
-    margin-bottom: 10px;
+    margin-bottom: 15px; // Tăng khoảng cách cho đẹp hơn
+    gap: 10px; // Sử dụng gap thay vì margin-right
 }
 
 .logo-icon {
     font-size: 30px;
-    margin-right: 10px;
     color: #E8F5E9;
 }
 
@@ -44,4 +53,59 @@
     font-size: 14px;
     opacity: 0.9;
     margin-top: 15px;
+}
+
+// Responsive Design
+@media (max-width: 768px) {
+
+    // Tablet
+    .footer-container {
+        padding: 30px 15px;
+        border-top-left-radius: 30px;
+        border-top-right-radius: 30px;
+    }
+
+    .footer-logo {
+        font-size: 20px;
+
+        .logo-icon {
+            font-size: 26px;
+        }
+    }
+
+    .footer-copyright {
+        font-size: 13px;
+    }
+
+    .footer-wave {
+        top: -20px; // Giảm độ cao sóng
+    }
+}
+
+@media (max-width: 480px) {
+
+    // Mobile
+    .footer-container {
+        padding: 20px 10px;
+        border-top-left-radius: 20px;
+        border-top-right-radius: 20px;
+    }
+
+    .footer-logo {
+        flex-direction: column; // Xếp dọc trên mobile
+        font-size: 18px;
+
+        .logo-icon {
+            font-size: 24px;
+            margin-right: 0; // Xóa margin-right khi xếp dọc
+        }
+    }
+
+    .footer-copyright {
+        font-size: 12px;
+    }
+
+    .footer-wave {
+        top: -15px; // Giảm thêm độ cao sóng
+    }
 }

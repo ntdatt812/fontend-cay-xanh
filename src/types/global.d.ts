@@ -86,4 +86,43 @@ declare global {
         sohieu: string;
         hientrang: string;
     }
+
+    interface ITree {
+        _id: string,
+        tencayxanh: string,
+        khuvuc: string,
+        lat: string,
+        lng: string
+    }
+
+    interface IUpdateAt {
+        _id: string;
+        email: string;
+        name: string;
+    }
+
+
+    interface IHistory {
+        status: "PENDING" | "IN_PROGRESS" | "COMPLETED";
+        updatedAt: string; // ISO Date String
+        updatedBy: IUser;
+    }
+
+    interface IFeedback {
+        _id: string;
+        fullName: string;
+        phoneNumber: string;
+        emailFeedback: string;
+        status: "PENDING" | "IN_PROGRESS" | "COMPLETED";
+        title: string;
+        content: string;
+        treeId: ITree;
+        userId: string;
+        hinhanh: string;
+        history: IHistory[];
+        createdBy: IUser;
+        createdAt: string;
+        updatedAt: string;
+        updatedBy: IUpdateAt;
+    }
 }

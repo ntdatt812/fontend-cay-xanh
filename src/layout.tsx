@@ -5,7 +5,7 @@ import AppFooter from "./components/layout/app.footer";
 function Layout() {
 
   return (
-    <div>
+    <div >
       <AppHeader />
       <Outlet />
       <AppFooter />

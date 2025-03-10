@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import {
     AppstoreOutlined,
     HeartTwoTone,
-    TeamOutlined,
     UserOutlined,
     MenuFoldOutlined,
     MenuUnfoldOutlined,
@@ -15,6 +14,7 @@ import type { MenuProps } from 'antd';
 import { logoutAPI } from '@/services/api';
 type MenuItem = Required<MenuProps>['items'][number];
 import { IoLeafOutline } from 'react-icons/io5';
+import { VscFeedback } from 'react-icons/vsc';
 
 const { Content, Footer, Sider } = Layout;
 
@@ -36,37 +36,37 @@ const LayoutAdmin = () => {
 
     const items: MenuItem[] = [
         {
-            label: <Link to='/admin'>Dashboard</Link>,
+            label: <Link to='/admin'>Thống kê</Link>,
             key: 'dashboard',
             icon: <AppstoreOutlined />
         },
         {
-            label: <span>Manage Users</span>,
+            label: <Link to='/admin/user'>Quản lý người dùng</Link>,
             key: 'user',
             icon: <UserOutlined />,
-            children: [
-                {
-                    label: <Link to='/admin/user'>CRUD</Link>,
-                    key: 'crud',
-                    icon: <TeamOutlined />,
-                },
-                // {
-                //     label: 'Files1',
-                //     key: 'file1',
-                //     icon: <TeamOutlined />,
-                // }
-            ]
+            // children: [
+            //     {
+            //         label: <Link to='/admin/user'>Quản lý người dùng</Link>,
+            //         key: 'crud',
+            //         icon: <TeamOutlined />,
+            //     },
+            //     // {
+            //     //     label: 'Files1',
+            //     //     key: 'file1',
+            //     //     icon: <TeamOutlined />,
+            //     // }
+            // ]
         },
         {
-            label: <Link to='/admin/tree'>Manage Tree</Link>,
+            label: <Link to='/admin/tree'>Quản lý cây</Link>,
             key: 'tree',
             icon: <IoLeafOutline />
         },
-        // {
-        //     label: <Link to='/admin/order'>Manage Orders</Link>,
-        //     key: 'order',
-        //     icon: <DollarCircleOutlined />
-        // },
+        {
+            label: <Link to='/admin/feedback'>Quản lý phản ánh</Link>,
+            key: 'feedback',
+            icon: <VscFeedback />
+        },
 
     ];
 
@@ -121,6 +121,8 @@ const LayoutAdmin = () => {
                     <div style={{ height: 32, margin: 16, textAlign: 'center' }}>
                         Admin
                     </div>
+                    <hr />
+                    <br />
                     <Menu
                         defaultSelectedKeys={[activeMenu]}
                         mode="inline"

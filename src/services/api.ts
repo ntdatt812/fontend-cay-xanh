@@ -97,3 +97,27 @@ export const getTreeByIdAPI = (_id: string) => {
     const urlBackend = `/api/v1/trees/${_id}`;
     return axios.get<IBackendRes<ITreeTable>>(urlBackend)
 }
+
+export const getFeedbacksAPI = (query: string) => {
+    const urlBackend = `/api/v1/feedbacks?${query}`;
+    return axios.get<IBackendRes<IModelPaginate<IFeedback>>>(urlBackend)
+}
+
+export const updateStatusFeedbackAPI = (_id: string, status: string) => {
+    const urlBackend = `/api/v1/feedbacks/${_id}`;
+    return axios.patch<IBackendRes<IFeedback>>(urlBackend, { status })
+}
+
+export const createFeedbackAPI = (fullName: string, phoneNumber: string, emailFeedback: string, title: string,
+    content: string, treeId: string, hinhanh: string) => {
+    const urlBackend = "/api/v1/feedbacks";
+    return axios.post<IBackendRes<IFeedback>>(urlBackend,
+        {
+            fullName, phoneNumber, emailFeedback, title, content, treeId, hinhanh
+        })
+}
+
+export const getFeedbackByIdAPI = (_id: string) => {
+    const urlBackend = `/api/v1/feedbacks/${_id}`;
+    return axios.get<IBackendRes<IFeedback>>(urlBackend)
+}

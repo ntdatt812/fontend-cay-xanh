@@ -1,0 +1,322 @@
+.feedbackPage-container {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 20px;
+
+    .ant-spin-nested-loading {
+        width: 100%;
+
+        .ant-spin-container {
+            .search-bar {
+                padding: 20px;
+                background: #fff;
+                border-radius: 10px;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+                margin-bottom: 20px;
+
+                .ant-form-inline {
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                    flex-wrap: wrap; // Cho phép xuống dòng trên mobile
+
+                    .ant-form-item {
+                        margin-bottom: 0;
+
+                        .ant-input {
+                            width: 250px;
+                            height: 40px;
+                            border-radius: 5px;
+                            padding: 0 12px;
+                        }
+
+                        .filter-button {
+                            background-color: #2e7d32;
+                            border-color: #2e7d32;
+                            height: 40px;
+                            border-radius: 5px;
+
+                            &:hover {
+                                background-color: #388e3c;
+                                border-color: #388e3c;
+                            }
+                        }
+
+                        .reset-button {
+                            background-color: #d3d3d3;
+                            border-color: #d3d3d3;
+                            color: #333;
+                            height: 40px;
+                            border-radius: 5px;
+
+                            &:hover {
+                                background-color: #c0c0c0;
+                                border-color: #c0c0c0;
+                            }
+                        }
+                    }
+                }
+
+                .ant-tabs {
+                    margin-top: 20px;
+                    overflow-x: auto; // Cuộn ngang trên mobile nếu cần
+                    white-space: nowrap; // Giữ các tab trên cùng một dòng
+
+                    .ant-tabs-tab {
+                        font-size: 16px;
+                        padding: 10px 20px;
+                    }
+                }
+
+                .mobile-filter {
+                    display: none;
+                    margin-bottom: 20px;
+                    cursor: pointer;
+                    color: #2e7d32;
+                    font-weight: 500;
+
+                    svg {
+                        margin-right: 5px;
+                    }
+                }
+            }
+
+            .ant-pagination {
+                margin-top: 20px;
+                text-align: center;
+
+                .ant-pagination-item {
+                    border-radius: 5px;
+                }
+
+                .ant-pagination-item-active {
+                    background-color: #2e7d32;
+                    border-color: #2e7d32;
+
+                    a {
+                        color: #fff;
+                    }
+                }
+            }
+        }
+    }
+
+    // Responsive Design
+    @media (max-width: 768px) {
+        padding: 0 10px;
+
+        .search-bar {
+            .ant-form-inline {
+                flex-direction: column;
+                align-items: stretch;
+
+                .ant-form-item {
+                    width: 100%;
+
+                    .ant-input {
+                        width: 100% !important;
+                    }
+
+                    .filter-button,
+                    .reset-button {
+                        width: 100%;
+                    }
+                }
+            }
+
+            .ant-tabs {
+                margin-top: 15px;
+            }
+
+            .mobile-filter {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+        }
+    }
+
+    @media (max-width: 480px) {
+        .search-bar {
+            padding: 15px;
+
+            .ant-form-inline {
+                gap: 8px;
+            }
+
+            .ant-tabs {
+                font-size: 14px;
+                padding: 8px 15px;
+            }
+
+            .mobile-filter {
+                font-size: 14px;
+            }
+        }
+
+        .ant-pagination {
+            font-size: 12px;
+        }
+    }
+}
+
+// Wrapper cho toàn bộ container ngoài cùng
+.feedbackPage-wrapper {
+    background: #efefef;
+    padding: 20px 0;
+}
+
+.feedback-card {
+    background: #fff;
+    width: 100%;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    margin-bottom: 20px;
+    overflow: hidden;
+
+    &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .feedback-wrapper {
+        padding: 20px;
+
+        .feedback-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+
+            .feedback-title {
+                font-size: 18px;
+                font-weight: 600;
+                color: #2e7d32;
+                margin: 0;
+                line-height: 1.4;
+            }
+
+            .feedback-status {
+                .status {
+                    font-size: 12px;
+                    font-weight: 500;
+                    padding: 4px 8px;
+                    border-radius: 12px;
+
+                    &.pending {
+                        background-color: #ffebee;
+                        color: #d32f2f;
+                    }
+
+                    &.in-progress {
+                        background-color: #fff3e0;
+                        color: #ef6c00;
+                    }
+
+                    &.completed {
+                        background-color: #e3f2fd;
+                        color: #1976d2;
+                    }
+                }
+            }
+        }
+
+        .feedback-details {
+            margin-bottom: 15px;
+
+            p {
+                margin: 8px 0;
+                font-size: 14px;
+                color: #555;
+                line-height: 1.6;
+
+                .label {
+                    font-weight: 500;
+                    color: #333;
+                    margin-right: 5px;
+                }
+            }
+
+            .feedback-content {
+                display: -webkit-box;
+                -webkit-line-clamp: 2; // Giới hạn 2 dòng
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+        }
+
+        .feedback-footer {
+            border-top: 1px solid #eee;
+            padding-top: 10px;
+            text-align: right;
+
+            .feedback-date {
+                font-size: 12px;
+                color: #888;
+            }
+        }
+    }
+}
+
+// Responsive Design
+@media (max-width: 768px) {
+    .feedback-card {
+        margin-bottom: 15px;
+
+        .feedback-wrapper {
+            padding: 15px;
+
+            .feedback-header {
+                .feedback-title {
+                    font-size: 16px;
+                }
+
+                .feedback-status {
+                    .status {
+                        font-size: 11px;
+                        padding: 3px 6px;
+                    }
+                }
+            }
+
+            .feedback-details {
+                p {
+                    font-size: 13px;
+                }
+            }
+
+            .feedback-footer {
+                .feedback-date {
+                    font-size: 11px;
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 480px) {
+    .feedback-card {
+        .feedback-wrapper {
+            padding: 12px;
+
+            .feedback-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+
+                .feedback-title {
+                    font-size: 15px;
+                }
+            }
+
+            .feedback-details {
+                p {
+                    font-size: 12px;
+                }
+            }
+        }
+    }
+}

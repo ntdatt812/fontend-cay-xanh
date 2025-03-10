@@ -1,4 +1,13 @@
+// .main-content {
+//     flex: 1;
+//     /* Đảm bảo nội dung chiếm hết khoảng trống */
+//     min-height: 100vh;
+//     /* Giữ trang không quá ngắn */
+// }
+
+
 .tree-detail {
+    min-height: 70vh;
     padding: 20px;
     background-color: #f4f9f4;
     border-radius: 8px;

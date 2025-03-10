@@ -17,7 +17,7 @@ const ProtectedRoute = (props: IProps) => {
                 status="404"
                 title="404"
                 subTitle="Xin lỗi, bạn cần đăng nhập để truy cập tài nguyên này!"
-                extra={<Button type="primary"><Link to={"/"}>Về trang chủ</Link></ Button>}
+                extra={<Button type="primary"><Link to={"/login"}>Đăng nhập ngay</Link></ Button>}
             />
         )
     }

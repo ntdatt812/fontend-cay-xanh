@@ -1,0 +1,117 @@
+.feedback-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    min-height: 100vh;
+    background: #f2fdf5; // Màu xanh nhạt giống header
+
+    .feedback-card {
+        width: 100%;
+
+        background: #f2fdf5;
+        border-radius: 12px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        // padding: 20px;
+    }
+
+    .feedback-image {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        img {
+            width: 100%;
+            // max-height: 1000px;
+            object-fit: cover;
+            border-radius: 8px;
+            transition: transform 0.3s;
+
+            &:hover {
+                transform: scale(1.05);
+            }
+        }
+    }
+
+    .feedback-info {
+        // padding: 10px;
+
+        .feedback-title {
+            font-size: 22px;
+            font-weight: bold;
+            color: #007947;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .feedback-attributes {
+            list-style: none;
+            padding: 0;
+
+            li {
+                background: #d0f7e1;
+                margin-bottom: 8px;
+                padding: 12px;
+                border-radius: 6px;
+                font-size: 16px;
+                color: #000000;
+                display: flex;
+                flex-direction: column;
+                gap: 5px;
+
+                strong {
+                    color: #007947;
+                }
+
+                p {
+                    margin: 0;
+                    word-break: break-word;
+                    white-space: pre-wrap;
+                }
+            }
+        }
+    }
+
+    .back-button {
+        margin-top: 20px;
+        width: fit-content;
+        padding: 12px 20px;
+        background: #a0b1a7;
+        color: white;
+        border-radius: 20px;
+        /* Bo tròn */
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-align: center;
+        font-size: 16px;
+        font-weight: bold;
+        border: none;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+        &:hover {
+            background: #00695c;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        &:active {
+            transform: translateY(1px);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+    }
+
+
+
+
+}
+
+/* Loading & Error */
+.feedback-loading,
+.feedback-error {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-size: 20px;
+    color: #d32f2f;
+}

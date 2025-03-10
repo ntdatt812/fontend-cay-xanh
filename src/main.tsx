@@ -20,6 +20,8 @@ import TreeMapPage from './pages/client/treemap';
 import TreePage from './pages/client/tree';
 import enUS from 'antd/locale/en_US';
 import ManageFeedbackPage from './pages/admin/manage.feedback';
+import FeedbackPage from './pages/client/feedback/feedback';
+import DetailFeedback from './pages/client/feedback/detail.feedback';
 
 const router = createBrowserRouter([
   {
@@ -42,10 +44,14 @@ const router = createBrowserRouter([
         path: "/feedback",
         element: (
           <ProtectedRoute>
-            <div>Ý kiến phản ánh</div>
+            <FeedbackPage />
           </ProtectedRoute>
         ),
-      }
+      },
+      {
+        path: "/feedback/:id",
+        element: <DetailFeedback />,
+      },
     ]
   },
   {
