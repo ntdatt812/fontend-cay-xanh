@@ -62,7 +62,7 @@ const AppHeader = () => {
                                 menu={{
                                     items: [
                                         ...(user?.role === 'ADMIN' ? [{ label: <Link to="/admin">Trang Quản Trị</Link>, key: 'admin' }] : []),
-                                        { label: <Link to="/profile">Hồ Sơ</Link>, key: 'profile' },
+                                        // { label: <Link to="/profile">Hồ Sơ</Link>, key: 'profile' },
                                         { label: <span style={{ cursor: 'pointer' }} onClick={() => handleLogout()}>Đăng Xuất</span>, key: 'logout' }
                                     ]
                                 }}
@@ -70,7 +70,7 @@ const AppHeader = () => {
                             >
                                 <Space className="user-info">
                                     <Avatar icon={<UserOutlined />} />
-                                    {user?.name}
+                                    <span className="user-name">{user?.name}</span>
                                 </Space>
                             </Dropdown>
                         )}
@@ -83,21 +83,25 @@ const AppHeader = () => {
 
             {/* Mobile Drawer */}
             <Drawer
-                title="Menu Chức Năng"
+                className="mobile-menu"
+                title={<div className="drawer-header">Menu Chức Năng</div>}
                 placement="left"
                 onClose={() => setOpenDrawer(false)}
                 open={openDrawer}
             >
-                {menuItems.map((item) => (
-                    <p key={item.key}>
-                        <Link to={item.key} onClick={() => setOpenDrawer(false)}>
-                            {item.label}
+                <div className="drawer-menu">
+                    {menuItems.map(({ label, key }) => (
+                        <Link key={key} to={`/${key}`} onClick={() => setOpenDrawer(false)}>
+                            {label}
                         </Link>
-                    </p>
-                ))}
+                    ))}
+                </div>
                 <Divider />
-                <p onClick={() => handleLogout()}>Đăng Xuất</p>
-                <Divider />
+                {isAuthenticated && (
+                    <div className="drawer-footer" onClick={handleLogout}>
+                        Đăng Xuất
+                    </div>
+                )}
             </Drawer>
         </>
     );
