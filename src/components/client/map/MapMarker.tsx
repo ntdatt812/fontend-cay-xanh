@@ -12,6 +12,7 @@ interface IProps {
 
 const MapMarker = (props: IProps) => {
     const { trees } = props
+    const [treeFeedback, setTreeFeedback] = useState<ITree | null>(null)
     const [openModalCreate, setOpenModalCreate] = useState<boolean>(false)
     const navigate = useNavigate();
 
@@ -27,7 +28,7 @@ const MapMarker = (props: IProps) => {
                             click: (e) => {
                                 const map = e.target._map;
                                 const markerLatLng = e.target.getLatLng();
-                                map.flyTo(markerLatLng, 19, { animate: true, duration: 2 });
+                                map.flyTo(markerLatLng, 20, { animate: true, duration: 2 });
                             },
                         }}
                     >
@@ -41,13 +42,14 @@ const MapMarker = (props: IProps) => {
                                 onFeedback={() => {
                                     // Xử lý khi bấm nút Phản ánh
                                     console.log("Phản ánh của cây:", tree._id);
+                                    setTreeFeedback(tree);
                                     setOpenModalCreate(true)
                                 }}
                             />
                             <ModalPostFeedback
                                 setOpenModalCreate={setOpenModalCreate}
                                 openModalCreate={openModalCreate}
-                                tree={tree}
+                                treeFeedback={treeFeedback}
                             />
                         </Popup>
                     </Marker >

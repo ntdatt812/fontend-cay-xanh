@@ -3,6 +3,7 @@ import { treeDetailIcon } from './mapIcons';
 import TreePopup from './TreePopup';
 import { useEffect, useRef } from 'react';
 import { LatLngTuple } from 'leaflet';
+import DetailTreePopup from './DetailTreePopup';
 
 interface IProps {
     tree: ITreeDetail | null;
@@ -15,11 +16,9 @@ const MapMarkerDetail = ({ tree }: IProps) => {
 
     useEffect(() => {
         if (tree) {
-            // Khai báo kiểu dữ liệu rõ ràng là LatLngTuple
             const markerLatLng: LatLngTuple = [+tree.lat, +tree.lng];
-            map.flyTo(markerLatLng, 19, { animate: true, duration: 2 });
+            map.flyTo(markerLatLng, 20, { animate: true, duration: 2 });
 
-            // Mở popup khi Marker được thêm vào bản đồ
             if (markerRef.current) {
                 markerRef.current.openPopup();
             }
@@ -38,7 +37,7 @@ const MapMarkerDetail = ({ tree }: IProps) => {
             ref={markerRef} // Gán ref cho Marker
         >
             <Popup>
-                <TreePopup
+                <DetailTreePopup
                     tree={tree}
                     onDetail={() => {
                     }}

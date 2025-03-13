@@ -91,6 +91,7 @@ declare global {
         _id: string,
         tencayxanh: string,
         khuvuc: string,
+        sohieu: string
         lat: string,
         lng: string
     }

@@ -84,7 +84,7 @@ const FeedbackPage = () => {
                                         <Input placeholder="Tìm kiếm tiêu đề phản ánh" style={{ width: "250px" }} allowClear />
                                     </Form.Item>
                                     <Form.Item>
-                                        <Button type="primary" htmlType="submit">Tìm</Button>
+                                        <Button type="primary" htmlType="submit">Tìm kiếm</Button>
                                     </Form.Item>
                                     {/* <Form.Item>
                                         <Button

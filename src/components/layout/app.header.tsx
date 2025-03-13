@@ -7,48 +7,60 @@ import './app.header.scss';
 import { logoutAPI } from '@/services/api';
 
 const AppHeader = () => {
-    const { message } = App.useApp()
+    const { message } = App.useApp();
     const [openDrawer, setOpenDrawer] = useState(false);
     const { isAuthenticated, user, setUser, setIsAuthenticated } = useCurrentApp();
     const navigate = useNavigate();
 
     const handleLogout = async () => {
-        // TODO: Xử lý đăng xuất
         const res = await logoutAPI();
         if (res.data) {
-            message.success("Đăng xuất thành công!")
+            message.success("Đăng xuất thành công!");
             setUser(null);
             setIsAuthenticated(false);
             localStorage.removeItem("access_token");
         }
     };
 
-    const menuItems = [
-        { label: <Link to="/">Trang Chủ</Link>, key: '' },
-        // { label: <Link to="/category">Danh Mục</Link>, key: 'category' },
-        { label: <Link to="/treemap">Bản Đồ Cây Xanh</Link>, key: 'treemap' },
-        // { label: <Link to="/statistics">Thống Kê</Link>, key: 'stats' },
-        { label: <Link to="/feedback">Ý Kiến - Phản Ánh</Link>, key: 'feedback' },
+    type MenuItem = { label: string; path: string };
+
+    const menuItems: MenuItem[] = [
+        { label: "Trang Chủ", path: "/" },
+        { label: "Bản Đồ Cây Xanh", path: "/treemap" },
+        { label: "Ý Kiến - Phản Ánh", path: "/feedback" },
     ];
+
+    const userMenuItems = [
+        ...(user?.role === 'ADMIN' ? [{ label: "Trang Quản Trị", key: '/admin' }] : []),
+        { label: "Đăng Xuất", key: 'logout' }
+    ];
+
+    const handleMenuClick = ({ key }: { key: string }) => {
+        if (key === 'logout') {
+            handleLogout();
+        } else {
+            navigate(key);
+        }
+    };
 
     return (
         <>
             <header className="app-header">
                 <div className="header-container">
-                    {/* Logo (Hình ảnh) */}
+                    {/* Logo */}
                     <div className="header-logo" onClick={() => navigate('/')}>
                         <img src="/logo_qlcx.svg" alt="Quản Lý Cây Xanh, Cảnh Quan" className="logo-image" />
                     </div>
 
                     {/* Menu Desktop */}
                     <nav className="header-nav">
-                        {menuItems.map((item) => (
+                        {menuItems.map(({ label, path }) => (
                             <NavLink
-                                key={item.key}
-                                to={item.key}
+                                key={path}
+                                to={path}
                                 className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}
                             >
-                                {item.label}
+                                {label}
                             </NavLink>
                         ))}
                     </nav>
@@ -58,16 +70,7 @@ const AppHeader = () => {
                         {!isAuthenticated ? (
                             <span style={{ cursor: "pointer" }} onClick={() => navigate('/login')}>Đăng nhập</span>
                         ) : (
-                            <Dropdown
-                                menu={{
-                                    items: [
-                                        ...(user?.role === 'ADMIN' ? [{ label: <Link to="/admin">Trang Quản Trị</Link>, key: 'admin' }] : []),
-                                        // { label: <Link to="/profile">Hồ Sơ</Link>, key: 'profile' },
-                                        { label: <span style={{ cursor: 'pointer' }} onClick={() => handleLogout()}>Đăng Xuất</span>, key: 'logout' }
-                                    ]
-                                }}
-                                trigger={['click']}
-                            >
+                            <Dropdown menu={{ items: userMenuItems, onClick: handleMenuClick }} trigger={['click']}>
                                 <Space className="user-info">
                                     <Avatar icon={<UserOutlined />} />
                                     <span className="user-name">{user?.name}</span>
@@ -90,17 +93,20 @@ const AppHeader = () => {
                 open={openDrawer}
             >
                 <div className="drawer-menu">
-                    {menuItems.map(({ label, key }) => (
-                        <Link key={key} to={`/${key}`} onClick={() => setOpenDrawer(false)}>
+                    {menuItems.map(({ label, path }) => (
+                        <NavLink
+                            key={path}
+                            to={path}
+                            onClick={() => setOpenDrawer(false)}
+                            className={({ isActive }) => isActive ? 'drawer-item active' : 'drawer-item'}
+                        >
                             {label}
-                        </Link>
+                        </NavLink>
                     ))}
                 </div>
                 <Divider />
                 {isAuthenticated && (
-                    <div className="drawer-footer" onClick={handleLogout}>
-                        Đăng Xuất
-                    </div>
+                    <div className="drawer-footer" onClick={handleLogout}>Đăng Xuất</div>
                 )}
             </Drawer>
         </>

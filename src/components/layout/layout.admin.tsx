@@ -119,7 +119,7 @@ const LayoutAdmin = () => {
                     collapsed={collapsed}
                     onCollapse={(value) => setCollapsed(value)}>
                     <div style={{ height: 32, margin: 16, textAlign: 'center' }}>
-                        Admin
+                        {collapsed === false ? <>Xin chào: <strong>{user?.name}</strong></> : <>ADMIN</>}
                     </div>
                     <hr />
                     <br />

@@ -16,7 +16,7 @@ type FileType = Parameters<GetProp<UploadProps, 'beforeUpload'>>[0];
 interface IProps {
     openModalCreate: boolean;
     setOpenModalCreate: (v: boolean) => void;
-    tree: ITree | null;
+    treeFeedback: ITree | null;
 }
 
 interface IFeedbackField {
@@ -37,12 +37,11 @@ interface IFeedbackField {
     updatedBy: IUser;
 }
 
-
-
 const ModalPostFeedback = (props: IProps) => {
-    const { openModalCreate, setOpenModalCreate, tree } = props;
-    const { message, notification } = App.useApp();
     const [form] = Form.useForm();
+    const { openModalCreate, setOpenModalCreate, treeFeedback } = props;
+    const { message, notification } = App.useApp();
+
 
     const [isSubmit, setIsSubmit] = useState(false);
     const [fileListThumbnail, setFileListThumbnail] = useState<UploadFile[]>([]);
@@ -52,10 +51,18 @@ const ModalPostFeedback = (props: IProps) => {
     const [previewImage, setPreviewImage] = useState<string>('');
 
 
+    useEffect(() => {
+        if (openModalCreate && treeFeedback) {
+            form.setFieldsValue({
+                title: `Phản ánh ${treeFeedback.tencayxanh}, số hiệu ${treeFeedback.sohieu}, khu vực ${treeFeedback.khuvuc}, tại tọa độ (${treeFeedback.lat}, ${treeFeedback.lng})`
+            });
+        }
+    }, [openModalCreate, treeFeedback]);
+
     const onFinish: FormProps<IFeedbackField>['onFinish'] = async (values) => {
         setIsSubmit(true)
         const { fullName, phoneNumber, emailFeedback, title, content } = values;
-        const treeId: string = (tree?._id ?? "").trim()
+        const treeId: string = (treeFeedback?._id ?? "").trim()
         console.log("check tree id:", treeId)
         const hinhanh = fileListThumbnail?.[0]?.name ?? "";
 
@@ -94,15 +101,16 @@ const ModalPostFeedback = (props: IProps) => {
     const beforeUpload = (file: FileType) => {
         const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
         if (!isJpgOrPng) {
-            message.error('You can only upload JPG/PNG file!');
+            message.error('Bạn chỉ có thể tải lên file JPG/PNG!');
+            return Upload.LIST_IGNORE; // Bỏ file không hợp lệ khỏi danh sách tải lên
         }
         const isLt2M = file.size / 1024 / 1024 < MAX_UPLOAD_IMAGE_SIZE;
         if (!isLt2M) {
-            message.error(`Image must smaller than ${MAX_UPLOAD_IMAGE_SIZE}MB!`);
+            message.error(`Ảnh phải nhỏ hơn ${MAX_UPLOAD_IMAGE_SIZE}MB!`);
+            return Upload.LIST_IGNORE;
         }
-        return isJpgOrPng && isLt2M || Upload.LIST_IGNORE;
+        return true;
     };
-
 
     const handlePreview = async (file: UploadFile) => {
         if (!file.url && !file.preview) {
@@ -129,24 +137,29 @@ const ModalPostFeedback = (props: IProps) => {
     };
 
     const handleUploadFile = async (options: RcCustomRequestOptions) => {
-        const { onSuccess } = options;
+        const { onSuccess, onError } = options;
         const file = options.file as UploadFile;
-        const res = await uploadFileAPI(file, "feedback");
+        try {
+            const res = await uploadFileAPI(file, "feedback");
 
-        if (res && res.data) {
-            const uploadedFile: any = {
-                uid: file.uid,
-                name: res.data.fileName,
-                status: 'done',
-                url: `${import.meta.env.VITE_BACKEND_URL}/images/feedback/${res.data.fileName}`
+            if (res && res.data) {
+                const uploadedFile: UploadFile = {
+                    uid: file.uid,
+                    name: res.data.fileName,
+                    status: 'done',
+                    url: `${import.meta.env.VITE_BACKEND_URL}/images/feedback/${res.data.fileName}`
+                };
+                setFileListThumbnail([uploadedFile]);
+                onSuccess?.('ok');
+            } else {
+                throw new Error(res.message);
             }
-            setFileListThumbnail([{ ...uploadedFile }])
-            if (onSuccess)
-                onSuccess('ok')
-        } else {
-            message.error(res.message)
+        } catch (error) {
+            message.error("Tải lên ảnh thất bại, vui lòng thử lại!");
+            onError?.(error as Error);
         }
     };
+
     const normFile = (e: any) => {
         if (Array.isArray(e)) {
             return e;
@@ -170,16 +183,15 @@ const ModalPostFeedback = (props: IProps) => {
                 okText={"Tạo mới"}
                 cancelText={"Hủy"}
                 confirmLoading={isSubmit}
-                width={window.innerWidth > 768 ? "50vw" : "90vw"}
+                width={window.innerWidth > 768 ? "70vw" : "90vw"}
                 maskClosable={false}
-                bodyStyle={{ maxHeight: "70vh", overflowY: "auto" }}
+                style={{ maxHeight: "70vh", overflowY: "auto" }}
             >
                 <Divider />
-
                 <Form
                     form={form}
                     name="form-create-tree"
-                    key={tree?._id}
+                    key={treeFeedback?._id}
                     onFinish={onFinish}
                     autoComplete="off"
                 >
@@ -197,16 +209,6 @@ const ModalPostFeedback = (props: IProps) => {
                         <Col span={12} xs={24} sm={24} md={12}>
                             <Form.Item<IFeedbackField>
                                 labelCol={{ span: 24 }}
-                                label="Tiêu đề"
-                                name="title"
-                                initialValue={tree ? `Phản ánh ${tree.tencayxanh}, khu vực ${tree.khuvuc}, tại tọa độ (${tree.lat}, ${tree.lng})` : ""}
-                            >
-                                <Input size="large" />
-                            </Form.Item>
-                        </Col>
-                        <Col span={12} xs={24} sm={24} md={12}>
-                            <Form.Item<IFeedbackField>
-                                labelCol={{ span: 24 }}
                                 label="Email"
                                 name="emailFeedback"
                                 rules={[{ required: true, message: 'Vui lòng nhập email của bạn!' }]}
@@ -214,7 +216,7 @@ const ModalPostFeedback = (props: IProps) => {
                                 <Input size="large" />
                             </Form.Item>
                         </Col>
-                        <Col span={12} xs={24} sm={24} md={12}>
+                        <Col span={8} xs={24} sm={24} md={8}>
                             <Form.Item<IFeedbackField>
                                 labelCol={{ span: 24 }}
                                 label="Số điện thoại"
@@ -224,7 +226,15 @@ const ModalPostFeedback = (props: IProps) => {
                                 <Input size="large" />
                             </Form.Item>
                         </Col>
-
+                        <Col span={16} xs={24} sm={24} md={16}>
+                            <Form.Item<IFeedbackField>
+                                labelCol={{ span: 24 }}
+                                label="Tiêu đề"
+                                name="title"
+                            >
+                                <Input />
+                            </Form.Item>
+                        </Col>
                         <Col span={24} xs={24} sm={24} md={12}>
                             <Form.Item<IFeedbackField>
                                 labelCol={{ span: 24 }}
