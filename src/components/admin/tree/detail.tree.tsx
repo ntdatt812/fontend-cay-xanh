@@ -89,8 +89,9 @@ const DetailTree = (props: IProps) => {
                     <Descriptions.Item span={2} label="Mô tả">{dataViewDetail?.mota}</Descriptions.Item>
                     <Descriptions.Item label="Khu vực">{dataViewDetail?.khuvuc}</Descriptions.Item>
                     <Descriptions.Item label="Số hiệu">{dataViewDetail?.sohieu}</Descriptions.Item>
-                    <Descriptions.Item label="Tình trạng">{dataViewDetail?.hientrang}</Descriptions.Item>
+                    <Descriptions.Item span={2} label="Tình trạng">{dataViewDetail?.hientrang}</Descriptions.Item>
                     <Descriptions.Item label="Đường kính">{dataViewDetail?.duongkinh} cm</Descriptions.Item>
+                    <Descriptions.Item label="Chu vi">{dataViewDetail?.chuvi} cm</Descriptions.Item>
                     <Descriptions.Item label="Kinh độ">{dataViewDetail?.lat}</Descriptions.Item>
                     <Descriptions.Item label="Vĩ độ">{dataViewDetail?.lng}</Descriptions.Item>
                     {/* <Descriptions.Item label="Thể loại" span={2}>

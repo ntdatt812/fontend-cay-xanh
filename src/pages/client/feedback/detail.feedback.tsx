@@ -86,7 +86,26 @@ const DetailFeedback = () => {
                                         year: "numeric",
                                     })}
                                 </li>
-                                <li><strong>Người tiếp nhận:</strong> {dataDetail?.updatedBy?.name ?? "Chưa cập nhật"}</li>
+                                <br />
+                                <hr />
+                                <br />
+                                <br />
+                                <li><strong>Người tiếp nhận:</strong> {dataDetail?.updatedBy?.name ?? "Chưa tiếp nhận"}</li>
+                                <li><strong>Phản hồi:</strong> {dataDetail?.report ?? "Chưa phản hồi"}</li>
+                                <li>
+                                    <strong>Ngày phản hồi:</strong>
+                                    {new Date(dataDetail.updatedAt).toLocaleTimeString("vi-VN", {
+                                        hour: "2-digit",
+                                        minute: "2-digit",
+                                        second: "2-digit",
+                                        hour12: false,
+                                    })} -
+                                    {new Date(dataDetail.updatedAt).toLocaleDateString("vi-VN", {
+                                        day: "2-digit",
+                                        month: "2-digit",
+                                        year: "numeric",
+                                    })}
+                                </li>
                             </ul>
                         </div>
                     </Col>

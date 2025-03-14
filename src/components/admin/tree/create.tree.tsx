@@ -31,7 +31,7 @@ type FieldType = {
     hinhanh: string;
     sohieu: string,
     hientrang: string,
-    duongkinh: number
+    chuvi: number
 };
 
 const CreateTree = (props: IProps) => {
@@ -86,13 +86,13 @@ const CreateTree = (props: IProps) => {
     const onFinish: FormProps<FieldType>['onFinish'] = async (values) => {
         setIsSubmit(true)
         const { tencayxanh, chieucao, hientrang,
-            khuvuc, lat, lng, mota, namtrong, sohieu, duongkinh } = values;
+            khuvuc, lat, lng, mota, namtrong, sohieu, chuvi } = values;
 
         const hinhanh = fileListThumbnail?.[0]?.name ?? "";
 
         const res = await createTreeAPI(
             tencayxanh, chieucao, hientrang, hinhanh,
-            khuvuc, lat, lng, mota, namtrong, sohieu, duongkinh
+            khuvuc, lat, lng, mota, namtrong, sohieu, chuvi
         );
         if (res && res.data) {
             message.success('Tạo cây mới thành công');
@@ -275,8 +275,8 @@ const CreateTree = (props: IProps) => {
                         <Col span={8}>
                             <Form.Item<FieldType>
                                 labelCol={{ span: 24 }}
-                                label="Đường kính thân"
-                                name="duongkinh"
+                                label="Chu vi thân"
+                                name="chuvi"
                                 rules={[{ required: true, message: 'Vui lòng nhập đường kính của cây!' }]}
                             >
                                 <InputNumber

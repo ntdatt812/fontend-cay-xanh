@@ -1,5 +1,5 @@
 import { updateStatusFeedbackAPI } from "@/services/api";
-import { App, Button, Descriptions, Divider, Drawer, Form, GetProp, Image, Select, Upload, UploadProps } from "antd";
+import { App, Button, Descriptions, Divider, Drawer, Form, GetProp, Image, Input, Select, Upload, UploadProps } from "antd";
 import { UploadFile } from "antd/lib";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
@@ -57,7 +57,8 @@ const FeedbackDetail = ({ dataInit, onClose, open, reloadTable, setDataInit }: I
     const handleChangeStatus = async () => {
         setIsSubmit(true);
         const status = form.getFieldValue('status');
-        const res = await updateStatusFeedbackAPI(dataInit?._id, status)
+        const report = form.getFieldValue('report');
+        const res = await updateStatusFeedbackAPI(dataInit?._id, status, report)
         if (res.data) {
             message.success("Cập nhật trạng thái phản ánh thành công!");
             setDataInit(null);
@@ -108,7 +109,17 @@ const FeedbackDetail = ({ dataInit, onClose, open, reloadTable, setDataInit }: I
                 <Descriptions title="" bordered column={2} layout="vertical">
                     <Descriptions.Item label="Người phản ánh">{dataInit?.fullName}</Descriptions.Item>
                     <Descriptions.Item label="Email">{dataInit?.emailFeedback}</Descriptions.Item>
-                    <Descriptions.Item label="Trạng thái">
+                    <Descriptions.Item label="Tiêu đề">{dataInit?.title}</Descriptions.Item>
+                    <Descriptions.Item span={2} label="Nội dung">{dataInit?.content}</Descriptions.Item>
+                    <Descriptions.Item span={2} label="Cây xanh">
+                        {`Tên cây xanh `}<strong>{dataInit?.treeId.tencayxanh}</strong>{` tại khu vực `}
+                        <strong>{dataInit?.treeId.khuvuc}</strong>{` có toạ độ (`}
+                        <strong>{dataInit?.treeId.lat}</strong>{`, `}
+                        <strong>{dataInit?.treeId.lng}</strong>{`)`}
+                    </Descriptions.Item>
+                    <Descriptions.Item label="Ngày nhận">{dataInit && dataInit.createdAt ? dayjs(dataInit.createdAt).format('DD-MM-YYYY HH:mm:ss') : ""}</Descriptions.Item>
+                    <Descriptions.Item label="Ngày cập nhật">{dataInit && dataInit.updatedAt ? dayjs(dataInit.updatedAt).format('DD-MM-YYYY HH:mm:ss') : ""}</Descriptions.Item>
+                    <Descriptions.Item span={2} label="Trạng thái và phản hồi">
                         <Form
                             form={form}
                         >
@@ -122,18 +133,14 @@ const FeedbackDetail = ({ dataInit, onClose, open, reloadTable, setDataInit }: I
                                     <Option value="COMPLETED">Đã xử lý</Option>
                                 </Select>
                             </Form.Item>
+                            <Form.Item
+                                name={"report"}
+                                label="Nhập nội dung trả lời phản ánh"
+                            >
+                                <Input />
+                            </Form.Item>
                         </Form>
                     </Descriptions.Item>
-                    <Descriptions.Item label="Tiêu đề">{dataInit?.title}</Descriptions.Item>
-                    <Descriptions.Item span={2} label="Nội dung">{dataInit?.content}</Descriptions.Item>
-                    <Descriptions.Item span={2} label="Cây xanh">
-                        {`Tên cây xanh `}<strong>{dataInit?.treeId.tencayxanh}</strong>{` tại khu vực `}
-                        <strong>{dataInit?.treeId.khuvuc}</strong>{` có toạ độ (`}
-                        <strong>{dataInit?.treeId.lat}</strong>{`, `}
-                        <strong>{dataInit?.treeId.lng}</strong>{`)`}
-                    </Descriptions.Item>
-                    <Descriptions.Item label="Ngày nhận">{dataInit && dataInit.createdAt ? dayjs(dataInit.createdAt).format('DD-MM-YYYY HH:mm:ss') : ""}</Descriptions.Item>
-                    <Descriptions.Item label="Ngày cập nhật">{dataInit && dataInit.updatedAt ? dayjs(dataInit.updatedAt).format('DD-MM-YYYY HH:mm:ss') : ""}</Descriptions.Item>
                 </Descriptions>
                 <Divider orientation="left" > Ảnh cây xanh </Divider>
                 <Upload

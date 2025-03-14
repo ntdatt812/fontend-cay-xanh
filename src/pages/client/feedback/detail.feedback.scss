@@ -76,27 +76,26 @@
         margin-top: 20px;
         width: fit-content;
         padding: 12px 20px;
-        background: #a0b1a7;
-        color: white;
+        // background: #a0b1a7;
+        color: rgb(21, 116, 41);
         border-radius: 20px;
-        /* Bo tròn */
         cursor: pointer;
         transition: all 0.3s ease;
         text-align: center;
         font-size: 16px;
         font-weight: bold;
         border: none;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        // box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 
         &:hover {
-            background: #00695c;
+            background: #c8ffc1;
             transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 6px 12px rgba(255, 255, 255, 0.2);
         }
 
         &:active {
             transform: translateY(1px);
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 2px 4px rgba(255, 255, 255, 0.2);
         }
     }
 

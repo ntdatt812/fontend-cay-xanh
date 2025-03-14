@@ -1,8 +1,9 @@
 import FeedbackDetail from "@/components/admin/feedback/detail.feedback";
-import { getFeedbacksAPI } from "@/services/api";
+import { deleteFeedbackAPI, getFeedbacksAPI } from "@/services/api";
 import { dateRangeValidate } from "@/services/helper";
+import { DeleteTwoTone, EditTwoTone } from "@ant-design/icons";
 import { ActionType, ProColumns, ProTable } from "@ant-design/pro-components";
-import { App } from "antd";
+import { App, Popconfirm } from "antd";
 import { useRef, useState } from "react";
 
 const ManageFeedbackPage = () => {
@@ -11,7 +12,23 @@ const ManageFeedbackPage = () => {
     const [currentDataTable, setCurrentDataTable] = useState<IFeedback[]>([]);
     const [dataInit, setDataInit] = useState<IFeedback | null>(null);
     const [openViewDetail, setOpenViewDetail] = useState<boolean>(false);
-    // const { message, notification } = App.useApp();
+    const { message, notification } = App.useApp();
+    const [isDeleteTree, setisDeleteTree] = useState<boolean>(false);
+
+    const handleDeleteFeedback = async (_id: string) => {
+        setisDeleteTree(true)
+        const res = await deleteFeedbackAPI(_id);
+        if (res && res.data) {
+            message.success('Đã xoá phản ánh');
+            reloadTable();
+        } else {
+            notification.error({
+                message: 'Đã có lỗi xảy ra',
+                description: res.message
+            })
+        }
+        setisDeleteTree(false)
+    }
 
     const columns: ProColumns<IFeedback>[] = [
         {
@@ -35,6 +52,42 @@ const ManageFeedbackPage = () => {
         { title: 'Người phản ánh', dataIndex: 'fullName', hideInSearch: true },
         { title: 'Số điện thoại', dataIndex: 'phoneNumber', sorter: true },
         { title: 'Ngày gửi', dataIndex: 'createdAt', valueType: "date", sorter: true },
+        {
+            title: 'Action',
+            hideInSearch: true,
+            render(dom, entity, index, action, schema) {
+                return (
+                    <>
+                        {/* <EditTwoTone
+                            twoToneColor="#f57800" style={{ cursor: "pointer", margin: "0 5px" }}
+                            onClick={() => {
+                                setOpenModalUpdate(true);
+                                setDataUpdate(entity);
+                            }}
+                        /> */}
+                        <Popconfirm
+                            placement="leftTop"
+                            title="Xác nhận phản ánh"
+                            description={
+                                <>
+                                    Bạn có chắc chắn muốn phản ánh <b>{entity.title}</b> không?
+                                </>
+                            }
+                            onConfirm={() => handleDeleteFeedback(entity._id)}
+                            okText="Xác nhận"
+                            cancelText="Hủy"
+                            okButtonProps={{ loading: isDeleteTree }}
+                        >
+                            <span style={{ cursor: "pointer" }}>
+                                <DeleteTwoTone twoToneColor="#ff4d4f" />
+                            </span>
+                        </Popconfirm>
+
+                    </>
+
+                )
+            }
+        }
     ];
 
     const reloadTable = () => {

@@ -18,8 +18,8 @@ interface DetailTreePopupProps {
 }
 
 const DetailTreePopup: React.FC<DetailTreePopupProps> = (
-    { tree
-        , onDetail, onFeedback
+    {
+        tree, onDetail, onFeedback
     }
 ) => {
     return (
@@ -53,7 +53,6 @@ const DetailTreePopup: React.FC<DetailTreePopupProps> = (
                     Phản ánh
                 </button>
             </div> */}
-
         </div>
     );
 };

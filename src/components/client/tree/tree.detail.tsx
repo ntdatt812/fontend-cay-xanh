@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import 'styles/tree-detail.scss';
 import MapWrapperDetail from "../map/MapWrapperDetail";
+import ModalPostFeedback from "../feedback/create.feedback";
 
 interface IProps {
     tree: ITreeTable | null;
@@ -12,6 +13,8 @@ interface IProps {
 
 const TreeDetail = ({ tree, loading }: IProps) => {
     const [isPreviewVisible, setIsPreviewVisible] = useState(false);
+    const [openModalCreate, setOpenModalCreate] = useState(false);
+
     const navigate = useNavigate();
 
     const handleBack = () => {
@@ -64,6 +67,7 @@ const TreeDetail = ({ tree, loading }: IProps) => {
                             <li><strong>Khu vực:</strong> {tree.khuvuc}</li>
                             <li><strong>Hiện trạng:</strong> {tree.hientrang}</li>
                             <li><strong>Đường kính:</strong> {tree.duongkinh} cm</li>
+                            <li><strong>Chu vi:</strong> {tree.chuvi} cm</li>
                             <li><strong>Số hiệu:</strong> {tree.sohieu}</li>
                             <li><strong>Vĩ độ:</strong> {tree.lat}</li>
                             <li><strong>Kinh độ:</strong> {tree.lng}</li>
@@ -76,7 +80,17 @@ const TreeDetail = ({ tree, loading }: IProps) => {
                     <div className="additional-info">
                         <div className="title-additional">
                             <h2>Vị trí của cây</h2>
-                            <Button className="button-feedback">Gửi phản ánh</Button>
+                            <Button
+                                className="button-feedback"
+                                onClick={() => {
+                                    setOpenModalCreate(true)
+                                }}
+                            >Gửi phản ánh</Button>
+                            <ModalPostFeedback
+                                setOpenModalCreate={setOpenModalCreate}
+                                openModalCreate={openModalCreate}
+                                treeFeedback={tree}
+                            />
                         </div>
                         <br />
                         <MapWrapperDetail

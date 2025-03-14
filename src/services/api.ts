@@ -74,12 +74,12 @@ export const createTreeAPI = (
     mota: string,
     namtrong: number,
     sohieu: string,
-    duongkinh: number) => {
+    chuvi: number) => {
     const urlBackend = "/api/v1/trees";
     return axios.post<IBackendRes<IRegister>>(urlBackend,
         {
             tencayxanh, chieucao, hientrang, hinhanh,
-            khuvuc, lat, lng, mota, namtrong, sohieu, duongkinh
+            khuvuc, lat, lng, mota, namtrong, sohieu, chuvi
         })
 }
 
@@ -95,12 +95,12 @@ export const updateTreeAPI = (
     mota: string,
     namtrong: number,
     sohieu: string,
-    duongkinh: number) => {
+    chuvi: number) => {
     const urlBackend = `/api/v1/trees/${_id}`;
     return axios.patch<IBackendRes<IRegister>>(urlBackend,
         {
             tencayxanh, chieucao, hientrang, hinhanh,
-            khuvuc, lat, lng, mota, namtrong, sohieu, duongkinh
+            khuvuc, lat, lng, mota, namtrong, sohieu, chuvi
         })
 }
 
@@ -128,9 +128,9 @@ export const getFeedbacksAPI = (query: string) => {
     return axios.get<IBackendRes<IModelPaginate<IFeedback>>>(urlBackend)
 }
 
-export const updateStatusFeedbackAPI = (_id: string, status: string) => {
+export const updateStatusFeedbackAPI = (_id: string, status: string, report: string) => {
     const urlBackend = `/api/v1/feedbacks/${_id}`;
-    return axios.patch<IBackendRes<IFeedback>>(urlBackend, { status })
+    return axios.patch<IBackendRes<IFeedback>>(urlBackend, { status, report })
 }
 
 export const createFeedbackAPI = (fullName: string, phoneNumber: string, emailFeedback: string, title: string,
@@ -145,4 +145,9 @@ export const createFeedbackAPI = (fullName: string, phoneNumber: string, emailFe
 export const getFeedbackByIdAPI = (_id: string) => {
     const urlBackend = `/api/v1/feedbacks/${_id}`;
     return axios.get<IBackendRes<IFeedback>>(urlBackend)
+}
+
+export const deleteFeedbackAPI = (_id: string) => {
+    const urlBackend = `/api/v1/feedbacks/${_id}`;
+    return axios.delete<IBackendRes<IRegister>>(urlBackend)
 }

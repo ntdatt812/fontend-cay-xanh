@@ -69,6 +69,7 @@ declare global {
         sohieu: string,
         hientrang: string,
         duongkinh: number,
+        chuvi: number,
         createdBy: IUser;
         createdAt: string;
         updatedAt: string;
@@ -98,6 +99,7 @@ declare global {
         _id: string;
         fullName: string;
         phoneNumber: string;
+        report: string;
         emailFeedback: string;
         status: "PENDING" | "IN_PROGRESS" | "COMPLETED";
         title: string;

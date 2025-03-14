@@ -36,7 +36,7 @@ type FieldType = {
     hinhanh: string;
     sohieu: string,
     hientrang: string,
-    duongkinh: number
+    chuvi: number
 };
 
 const UpdateTree = (props: IProps) => {
@@ -101,7 +101,7 @@ const UpdateTree = (props: IProps) => {
                 hinhanh: arrThumbnail,
                 sohieu: dataUpdate.sohieu,
                 hientrang: dataUpdate.hientrang,
-                duongkinh: dataUpdate.duongkinh
+                chuvi: dataUpdate.chuvi
             })
             setFileListThumbnail(arrThumbnail as any);
         }
@@ -111,13 +111,13 @@ const UpdateTree = (props: IProps) => {
     const onFinish: FormProps<FieldType>['onFinish'] = async (values) => {
         setIsSubmit(true)
         const { _id, tencayxanh, chieucao, hientrang,
-            khuvuc, lat, lng, mota, namtrong, sohieu, duongkinh } = values;
+            khuvuc, lat, lng, mota, namtrong, sohieu, chuvi } = values;
 
         const hinhanh = fileListThumbnail?.[0]?.name ?? "";
 
         const res = await updateTreeAPI(_id,
             tencayxanh, chieucao, hientrang, hinhanh,
-            khuvuc, lat, lng, mota, namtrong, sohieu, duongkinh
+            khuvuc, lat, lng, mota, namtrong, sohieu, chuvi
         );
         if (res && res.data) {
             message.success('Cập nhật cây thành công');
@@ -155,7 +155,6 @@ const UpdateTree = (props: IProps) => {
         return isJpgOrPng && isLt2M || Upload.LIST_IGNORE;
     };
 
-
     const handlePreview = async (file: UploadFile) => {
         if (!file.url && !file.preview) {
             file.preview = await getBase64(file.originFileObj as FileType);
@@ -166,10 +165,7 @@ const UpdateTree = (props: IProps) => {
     };
 
     const handleRemove = async (file: UploadFile) => {
-
         setFileListThumbnail([])
-
-
     };
 
     const handleChange = (info: UploadChangeParam) => {
@@ -182,8 +178,6 @@ const UpdateTree = (props: IProps) => {
             setLoadingThumbnail(false);
         }
     };
-
-
 
     const handleUploadFile = async (options: RcCustomRequestOptions) => {
         const { onSuccess } = options;
@@ -309,8 +303,8 @@ const UpdateTree = (props: IProps) => {
                         <Col span={8}>
                             <Form.Item<FieldType>
                                 labelCol={{ span: 24 }}
-                                label="Đường kính thân"
-                                name="duongkinh"
+                                label="Chu vi thân"
+                                name="chuvi"
                                 rules={[{ required: true, message: 'Vui lòng nhập đường kính của cây!' }]}
                             >
                                 <InputNumber

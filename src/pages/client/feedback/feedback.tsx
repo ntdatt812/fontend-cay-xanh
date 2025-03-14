@@ -13,6 +13,7 @@ type FieldType = {
 type IFeedback = {
     _id: string;
     title: string;
+    report: string;
     status: "PENDING" | "IN_PROGRESS" | "COMPLETED";
     fullName: string;
     updatedBy?: { name: string };
@@ -67,7 +68,7 @@ const FeedbackPage = () => {
 
     const items: TabsProps["items"] = [
         { key: "all", label: "Tất cả" },
-        { key: "PENDING", label: "Chờ xử lý" },
+        { key: "PENDING", label: "Chưa tiếp nhận" },
         { key: "IN_PROGRESS", label: "Đang xử lý" },
         { key: "COMPLETED", label: "Đã hoàn thành" },
     ];
@@ -134,11 +135,14 @@ const FeedbackPage = () => {
                                                     <p className="feedback-sender">
                                                         <span className="label">Người gửi:</span> {item.fullName}
                                                     </p>
-                                                    <p className="feedback-receiver">
-                                                        <span className="label">Người nhận phản ánh:</span> {item.updatedBy?.name ?? "Chưa xác định"}
-                                                    </p>
                                                     <p className="feedback-content">
                                                         <span className="label">Nội dung:</span> {item.content.length > 100 ? `${item.content.substring(0, 100)}...` : item.content}
+                                                    </p>
+                                                    <p className="feedback-receiver">
+                                                        <span className="label">Người nhận phản ánh:</span> {item.updatedBy?.name ?? "Chưa tiếp nhận"}
+                                                    </p>
+                                                    <p className="feedback-receiver">
+                                                        <span className="label">Phản hồi:</span> {item.report ?? "Chưa phản hồi"}
                                                     </p>
                                                 </div>
                                                 <div className="feedback-footer">
