@@ -63,23 +63,44 @@ export const uploadFileAPI = (fileImg: any, folder: string) => {
     });
 }
 
-export const createTreeAPI = (tencayxanh: string, chieucao: number, hientrang: string, hinhanh: string,
-    khuvuc: string, lat: string, lng: string, mota: string, namtrong: number, sohieu: string) => {
+export const createTreeAPI = (
+    tencayxanh: string,
+    chieucao: number,
+    hientrang: string,
+    hinhanh: string,
+    khuvuc: string,
+    lat: string,
+    lng: string,
+    mota: string,
+    namtrong: number,
+    sohieu: string,
+    duongkinh: number) => {
     const urlBackend = "/api/v1/trees";
     return axios.post<IBackendRes<IRegister>>(urlBackend,
         {
             tencayxanh, chieucao, hientrang, hinhanh,
-            khuvuc, lat, lng, mota, namtrong, sohieu
+            khuvuc, lat, lng, mota, namtrong, sohieu, duongkinh
         })
 }
 
-export const updateTreeAPI = (_id: string, tencayxanh: string, chieucao: number, hientrang: string, hinhanh: string,
-    khuvuc: string, lat: string, lng: string, mota: string, namtrong: number, sohieu: string) => {
+export const updateTreeAPI = (
+    _id: string,
+    tencayxanh: string,
+    chieucao: number,
+    hientrang: string,
+    hinhanh: string,
+    khuvuc: string,
+    lat: string,
+    lng: string,
+    mota: string,
+    namtrong: number,
+    sohieu: string,
+    duongkinh: number) => {
     const urlBackend = `/api/v1/trees/${_id}`;
     return axios.patch<IBackendRes<IRegister>>(urlBackend,
         {
             tencayxanh, chieucao, hientrang, hinhanh,
-            khuvuc, lat, lng, mota, namtrong, sohieu
+            khuvuc, lat, lng, mota, namtrong, sohieu, duongkinh
         })
 }
 
@@ -88,10 +109,14 @@ export const deleteTreeAPI = (_id: string) => {
     return axios.delete<IBackendRes<IRegister>>(urlBackend)
 }
 
-export const getAllTreesWithoutPaginateAPI = () => {
+export const getAllTreesWithoutPaginateAPI = (filters: { khuvuc: string[]; duongkinh: string[] }) => {
     const urlBackend = `/api/v1/trees/all`;
-    return axios.get<IBackendRes<ITreeTable[]>>(urlBackend)
-}
+
+    return axios.get<IBackendRes<ITreeTable[]>>(urlBackend, {
+        params: filters,
+    });
+};
+
 
 export const getTreeByIdAPI = (_id: string) => {
     const urlBackend = `/api/v1/trees/${_id}`;

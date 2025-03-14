@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import {
-    App, Col, Divider, Form, Image, Input,
+    App, Button, Col, Divider, Form, Image, Input,
     InputNumber, Modal, Row, Select, Upload
 } from 'antd';
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
@@ -11,6 +11,7 @@ import { UploadChangeParam } from 'antd/es/upload';
 import { UploadRequestOption as RcCustomRequestOptions } from 'rc-upload/lib/interface';
 import { updateTreeAPI, uploadFileAPI } from '@/services/api';
 import { v4 as uuidv4 } from 'uuid';
+import MapPicker from '../map/LocationNewTree';
 
 const { TextArea } = Input;
 type FileType = Parameters<GetProp<UploadProps, 'beforeUpload'>>[0];
@@ -35,42 +36,37 @@ type FieldType = {
     hinhanh: string;
     sohieu: string,
     hientrang: string,
+    duongkinh: number
 };
 
 const UpdateTree = (props: IProps) => {
     const { dataUpdate, openModalUpdate, setDataUpdate, setOpenModalUpdate, refreshTable } = props;
     const { message, notification } = App.useApp();
     const [form] = Form.useForm();
-
     const [isSubmit, setIsSubmit] = useState(false);
     const [fileListThumbnail, setFileListThumbnail] = useState<UploadFile[]>([]);
-    // const [listKhuVuc, setListKhuVuc] = useState<{
-    //     label: string;
-    //     value: string;
-    // }[]>([]);
-
     const [listKhuVuc, setListKhuVuc] = useState([
-        { label: 'Khu vực 1', value: 'KV1' },
-        { label: 'Khu vực 2', value: 'KV2' },
-        { label: 'Khu vực 3', value: 'KV3' },
-        { label: 'Khu vực 4', value: 'KV4' },
-        { label: 'Khu vực 5', value: 'KV5' },
-        { label: 'Khu vực 6', value: 'KV6' },
-        { label: 'Khu vực 7', value: 'KV7' },
-        { label: 'Khu vực 8', value: 'KV8' },
-        { label: 'Khu vực 9', value: 'KV9' },
-        { label: 'Khu vực 10', value: 'KV10' },
-        { label: 'Khu vực 11', value: 'KV11' },
-        { label: 'Khu vực 12', value: 'KV12' },
-        { label: 'Khu vực 13', value: 'KV13' },
-        { label: 'Khu vực 14', value: 'KV14' },
+        { label: 'Khu vực 1 (phía ngoài tường rào cổng chính giáp đường Quốc lộ 1A)', value: 'KV1' },
+        { label: 'Khu vực 2 (bãi đỗ xe ô tô trước hội trường và khuôn viên trước nhà điều hành)', value: 'KV2' },
+        { label: 'Khu vực 3 (hội trường, nhà điều hành, nhà xe, quảng trường, nhà A6, nhà A7)', value: 'KV3' },
+        { label: 'Khu vực 4 (nhà A5, khuôn viên và khu vườn ươm cây)', value: 'KV4' },
+        { label: 'Khu vực 5 (khu liên hợp thể thao khoa GDTC)', value: 'KV5' },
+        { label: 'Khu vực 6 (bãi cỏ phía trước nhà A1 và sân bóng Lucky)', value: 'KV6' },
+        { label: 'Khu vực 7 (nhà A1, nhà xe, nhà A2, căng tin)', value: 'KV7' },
+        { label: 'Khu vực 8 (nhà A3, khuôn viên và sân bóng chuyền)', value: 'KV8' },
+        { label: 'Khu vực 9 (trung tâm thư viện, xưởng thực hành KTCN và bãi cỏ phía sau thư viện)', value: 'KV9' },
+        { label: 'Khu vực 10 (trường THCS, THPT Hồng Đức và trường mầm non thực hành)', value: 'KV10' },
+        { label: 'Khu vực 11 (KTX N1, N2, N3, N4 và nhà ăn sinh viên số 01, 02)', value: 'KV11' },
+        { label: 'Khu vực 12 (bãi cỏ trục đường nối từ KTX N4 sang KTX N5)', value: 'KV12' },
+        { label: 'Khu vực 13 (KTX N5, nhà khách, nhà LHS Lào và nhà ăn sinh viên Lào)', value: 'KV13' },
+        { label: 'Khu vực 14 (bồn cây trục đường chính)', value: 'KV14' },
     ]);
     const [loadingThumbnail, setLoadingThumbnail] = useState<boolean>(false);
     // const [loadingSlider, setLoadingSlider] = useState<boolean>(false);
 
     const [previewOpen, setPreviewOpen] = useState<boolean>(false);
     const [previewImage, setPreviewImage] = useState<string>('');
-
+    const [showMap, setShowMap] = useState(false);
     // useEffect(() => {
     //     const fetchCategory = async () => {
     //         const res = await getCategoryAPI();
@@ -83,7 +79,6 @@ const UpdateTree = (props: IProps) => {
     //     }
     //     fetchCategory();
     // }, [])
-
     useEffect(() => {
         if (dataUpdate) {
             const arrThumbnail = [
@@ -106,6 +101,7 @@ const UpdateTree = (props: IProps) => {
                 hinhanh: arrThumbnail,
                 sohieu: dataUpdate.sohieu,
                 hientrang: dataUpdate.hientrang,
+                duongkinh: dataUpdate.duongkinh
             })
             setFileListThumbnail(arrThumbnail as any);
         }
@@ -115,13 +111,13 @@ const UpdateTree = (props: IProps) => {
     const onFinish: FormProps<FieldType>['onFinish'] = async (values) => {
         setIsSubmit(true)
         const { _id, tencayxanh, chieucao, hientrang,
-            khuvuc, lat, lng, mota, namtrong, sohieu } = values;
+            khuvuc, lat, lng, mota, namtrong, sohieu, duongkinh } = values;
 
         const hinhanh = fileListThumbnail?.[0]?.name ?? "";
 
         const res = await updateTreeAPI(_id,
             tencayxanh, chieucao, hientrang, hinhanh,
-            khuvuc, lat, lng, mota, namtrong, sohieu
+            khuvuc, lat, lng, mota, namtrong, sohieu, duongkinh
         );
         if (res && res.data) {
             message.success('Cập nhật cây thành công');
@@ -235,7 +231,6 @@ const UpdateTree = (props: IProps) => {
                 maskClosable={false}
             >
                 <Divider />
-
                 <Form
                     form={form}
                     name="form-create-tree"
@@ -244,34 +239,53 @@ const UpdateTree = (props: IProps) => {
                 >
                     <Row gutter={15}>
                         <Form.Item<FieldType>
+                            hidden
                             labelCol={{ span: 24 }}
                             label="_id"
                             name="_id"
-                            hidden
                         >
-                            <Input />
+                            <Input disabled />
                         </Form.Item>
-                        <Col span={12}>
+                        <Col span={10}>
                             <Form.Item<FieldType>
                                 labelCol={{ span: 24 }}
                                 label="Tên cây xanh"
                                 name="tencayxanh"
-                                rules={[{ required: true, message: 'Vui lòng nhập tên cây!' }]}
+                                rules={[{ required: true, message: 'Vui lòng nhập tên hiển thị!' }]}
                             >
                                 <Input />
                             </Form.Item>
                         </Col>
-                        <Col span={12}>
+                        <Col span={6}>
                             <Form.Item<FieldType>
                                 labelCol={{ span: 24 }}
                                 label="Năm trồng"
                                 name="namtrong"
                                 rules={[{ required: true, message: 'Vui lòng nhập năm trồng!' }]}
                             >
-                                <InputNumber />
+                                <InputNumber
+                                    controls={false}
+                                    style={{ width: '100%' }}
+                                />
                             </Form.Item>
                         </Col>
-                        <Col span={12}>
+                        <Col span={8}>
+                            <Form.Item<FieldType>
+                                labelCol={{ span: 24 }}
+                                label="Chiều cao"
+                                name="chieucao"
+                                rules={[{ required: true, message: 'Vui lòng nhập chiều cao của cây!' }]}
+                            >
+                                <InputNumber
+                                    min={1}
+                                    controls={false}
+                                    style={{ width: '100%' }}
+                                    formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                                    addonAfter=" cm"
+                                />
+                            </Form.Item>
+                        </Col>
+                        <Col span={8}>
                             <Form.Item<FieldType>
                                 labelCol={{ span: 24 }}
                                 label="Tình trạng cây"
@@ -282,7 +296,7 @@ const UpdateTree = (props: IProps) => {
                             </Form.Item>
                         </Col>
 
-                        <Col span={12}>
+                        <Col span={8}>
                             <Form.Item<FieldType>
                                 labelCol={{ span: 24 }}
                                 label="Số hiệu"
@@ -290,6 +304,22 @@ const UpdateTree = (props: IProps) => {
                                 rules={[{ required: true, message: 'Vui lòng nhập năm trồng!' }]}
                             >
                                 <Input />
+                            </Form.Item>
+                        </Col>
+                        <Col span={8}>
+                            <Form.Item<FieldType>
+                                labelCol={{ span: 24 }}
+                                label="Đường kính thân"
+                                name="duongkinh"
+                                rules={[{ required: true, message: 'Vui lòng nhập đường kính của cây!' }]}
+                            >
+                                <InputNumber
+                                    controls={false}
+                                    min={1}
+                                    style={{ width: '100%' }}
+                                    formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                                    addonAfter=" cm"
+                                />
                             </Form.Item>
                         </Col>
                         <Col span={24}>
@@ -302,22 +332,7 @@ const UpdateTree = (props: IProps) => {
                                 <TextArea />
                             </Form.Item>
                         </Col>
-                        <Col span={12}>
-                            <Form.Item<FieldType>
-                                labelCol={{ span: 24 }}
-                                label="Chiều cao"
-                                name="chieucao"
-                                rules={[{ required: true, message: 'Vui lòng nhập chiều cao của cây!' }]}
-                            >
-                                <InputNumber
-                                    min={1}
-                                    style={{ width: '100%' }}
-                                    formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-                                    addonAfter=" cm"
-                                />
-                            </Form.Item>
-                        </Col>
-                        <Col span={12}>
+                        <Col span={24}>
                             <Form.Item<FieldType>
                                 labelCol={{ span: 24 }}
                                 label="Khu vực"
@@ -351,6 +366,23 @@ const UpdateTree = (props: IProps) => {
                                 <Input />
                             </Form.Item>
                         </Col>
+                        <Col span={12}>
+                            <Form.Item<FieldType>
+                                labelCol={{ span: 24 }}
+                                label="Lấy toạ độ"
+                            >
+                                <Button type="primary" onClick={() => setShowMap(true)}>
+                                    Chọn toạ độ từ bản đồ
+                                </Button>
+                            </Form.Item>
+                        </Col>
+                        <MapPicker
+                            visible={showMap}
+                            onClose={() => setShowMap(false)}
+                            onSelectLocation={(lat, lng) => {
+                                form.setFieldsValue({ lat: lat.toFixed(6), lng: lng.toFixed(6) });
+                            }}
+                        />
                         <Col span={12}>
                             <Form.Item<FieldType>
                                 labelCol={{ span: 24 }}

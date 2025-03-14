@@ -34,8 +34,13 @@ const MapPicker = ({ visible, onClose, onSelectLocation }: MapPickerProps) => {
             okText="Chọn tọa độ"
             cancelText="Hủy"
             width="70vw"
+            height="80vh"
         >
-            <MapContainer center={[19.76861042809915, 105.77921655662206]} zoom={17} style={{ height: "60vh" }}>
+            <MapContainer
+                center={[19.76861042809915, 105.77921655662206]}
+                zoom={18} style={{ height: "80vh" }}
+                wheelPxPerZoomLevel={150}
+            >
                 <TileLayer
                     attribution='&copy; Nguyễn Thành Đạt'
                     url="http://mt0.google.com/vt/lyrs=s&hl=en&x={x}&y={y}&z={z}"
@@ -43,7 +48,7 @@ const MapPicker = ({ visible, onClose, onSelectLocation }: MapPickerProps) => {
                 />
                 <LocationMarker />
             </MapContainer>
-        </Modal>
+        </Modal >
     );
 };
 

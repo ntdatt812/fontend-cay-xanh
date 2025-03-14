@@ -31,6 +31,7 @@ type FieldType = {
     hinhanh: string;
     sohieu: string,
     hientrang: string,
+    duongkinh: number
 };
 
 const CreateTree = (props: IProps) => {
@@ -85,13 +86,13 @@ const CreateTree = (props: IProps) => {
     const onFinish: FormProps<FieldType>['onFinish'] = async (values) => {
         setIsSubmit(true)
         const { tencayxanh, chieucao, hientrang,
-            khuvuc, lat, lng, mota, namtrong, sohieu } = values;
+            khuvuc, lat, lng, mota, namtrong, sohieu, duongkinh } = values;
 
         const hinhanh = fileListThumbnail?.[0]?.name ?? "";
 
         const res = await createTreeAPI(
             tencayxanh, chieucao, hientrang, hinhanh,
-            khuvuc, lat, lng, mota, namtrong, sohieu
+            khuvuc, lat, lng, mota, namtrong, sohieu, duongkinh
         );
         if (res && res.data) {
             message.success('Tạo cây mới thành công');
@@ -211,7 +212,7 @@ const CreateTree = (props: IProps) => {
                     autoComplete="off"
                 >
                     <Row gutter={15}>
-                        <Col span={12}>
+                        <Col span={10}>
                             <Form.Item<FieldType>
                                 labelCol={{ span: 24 }}
                                 label="Tên cây xanh"
@@ -221,7 +222,7 @@ const CreateTree = (props: IProps) => {
                                 <Input />
                             </Form.Item>
                         </Col>
-                        <Col span={12}>
+                        <Col span={6}>
                             <Form.Item<FieldType>
                                 labelCol={{ span: 24 }}
                                 label="Năm trồng"
@@ -229,10 +230,28 @@ const CreateTree = (props: IProps) => {
                                 rules={[{ required: true, message: 'Vui lòng nhập năm trồng!' }]}
                             >
                                 <InputNumber
-                                    controls={false} />
+                                    controls={false}
+                                    style={{ width: '100%' }}
+                                />
                             </Form.Item>
                         </Col>
-                        <Col span={12}>
+                        <Col span={8}>
+                            <Form.Item<FieldType>
+                                labelCol={{ span: 24 }}
+                                label="Chiều cao"
+                                name="chieucao"
+                                rules={[{ required: true, message: 'Vui lòng nhập chiều cao của cây!' }]}
+                            >
+                                <InputNumber
+                                    min={1}
+                                    controls={false}
+                                    style={{ width: '100%' }}
+                                    formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                                    addonAfter=" cm"
+                                />
+                            </Form.Item>
+                        </Col>
+                        <Col span={8}>
                             <Form.Item<FieldType>
                                 labelCol={{ span: 24 }}
                                 label="Tình trạng cây"
@@ -243,7 +262,7 @@ const CreateTree = (props: IProps) => {
                             </Form.Item>
                         </Col>
 
-                        <Col span={12}>
+                        <Col span={8}>
                             <Form.Item<FieldType>
                                 labelCol={{ span: 24 }}
                                 label="Số hiệu"
@@ -251,6 +270,22 @@ const CreateTree = (props: IProps) => {
                                 rules={[{ required: true, message: 'Vui lòng nhập năm trồng!' }]}
                             >
                                 <Input />
+                            </Form.Item>
+                        </Col>
+                        <Col span={8}>
+                            <Form.Item<FieldType>
+                                labelCol={{ span: 24 }}
+                                label="Đường kính thân"
+                                name="duongkinh"
+                                rules={[{ required: true, message: 'Vui lòng nhập đường kính của cây!' }]}
+                            >
+                                <InputNumber
+                                    controls={false}
+                                    min={1}
+                                    style={{ width: '100%' }}
+                                    formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                                    addonAfter=" cm"
+                                />
                             </Form.Item>
                         </Col>
                         <Col span={24}>
@@ -263,22 +298,7 @@ const CreateTree = (props: IProps) => {
                                 <TextArea />
                             </Form.Item>
                         </Col>
-                        <Col span={6}>
-                            <Form.Item<FieldType>
-                                labelCol={{ span: 24 }}
-                                label="Chiều cao"
-                                name="chieucao"
-                                rules={[{ required: true, message: 'Vui lòng nhập chiều cao của cây!' }]}
-                            >
-                                <InputNumber
-                                    min={1}
-                                    style={{ width: '100%' }}
-                                    formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-                                    addonAfter=" cm"
-                                />
-                            </Form.Item>
-                        </Col>
-                        <Col span={18}>
+                        <Col span={24}>
                             <Form.Item<FieldType>
                                 labelCol={{ span: 24 }}
                                 label="Khu vực"
@@ -312,7 +332,7 @@ const CreateTree = (props: IProps) => {
                                 <Input />
                             </Form.Item>
                         </Col>
-                        <Col span={24}>
+                        <Col span={12}>
                             <Form.Item<FieldType>
                                 labelCol={{ span: 24 }}
                                 label="Lấy toạ độ"

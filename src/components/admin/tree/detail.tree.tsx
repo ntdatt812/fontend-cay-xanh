@@ -55,8 +55,6 @@ const DetailTree = (props: IProps) => {
             reader.onerror = (error) => reject(error);
         });
 
-
-
     const handleCancel = () => setPreviewOpen(false);
 
     const handlePreview = async (file: UploadFile) => {
@@ -86,12 +84,13 @@ const DetailTree = (props: IProps) => {
                 >
                     <Descriptions.Item label="Id">{dataViewDetail?._id}</Descriptions.Item>
                     <Descriptions.Item label="Tên cây xanh">{dataViewDetail?.tencayxanh}</Descriptions.Item>
-                    <Descriptions.Item label="Chiều cao">{dataViewDetail?.chieucao}</Descriptions.Item>
+                    <Descriptions.Item label="Chiều cao">{dataViewDetail?.chieucao} cm</Descriptions.Item>
                     <Descriptions.Item label="Năm trồng">{dataViewDetail?.namtrong}</Descriptions.Item>
                     <Descriptions.Item span={2} label="Mô tả">{dataViewDetail?.mota}</Descriptions.Item>
                     <Descriptions.Item label="Khu vực">{dataViewDetail?.khuvuc}</Descriptions.Item>
                     <Descriptions.Item label="Số hiệu">{dataViewDetail?.sohieu}</Descriptions.Item>
-                    <Descriptions.Item span={2} label="Tình trạng">{dataViewDetail?.hientrang}</Descriptions.Item>
+                    <Descriptions.Item label="Tình trạng">{dataViewDetail?.hientrang}</Descriptions.Item>
+                    <Descriptions.Item label="Đường kính">{dataViewDetail?.duongkinh} cm</Descriptions.Item>
                     <Descriptions.Item label="Kinh độ">{dataViewDetail?.lat}</Descriptions.Item>
                     <Descriptions.Item label="Vĩ độ">{dataViewDetail?.lng}</Descriptions.Item>
                     {/* <Descriptions.Item label="Thể loại" span={2}>

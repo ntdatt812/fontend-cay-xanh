@@ -68,25 +68,11 @@ declare global {
         hinhanh: string;
         sohieu: string,
         hientrang: string,
+        duongkinh: number,
         createdBy: IUser;
         createdAt: string;
         updatedAt: string;
     }
-
-    interface ITreeDetail {
-        _id: string;
-        tencayxanh: string;
-        khuvuc: string;
-        lat: string;
-        lng: string;
-        chieucao: number;
-        namtrong: number;
-        mota: string;
-        hinhanh: string;
-        sohieu: string;
-        hientrang: string;
-    }
-
     interface ITree {
         _id: string,
         tencayxanh: string,
@@ -101,7 +87,6 @@ declare global {
         email: string;
         name: string;
     }
-
 
     interface IHistory {
         status: "PENDING" | "IN_PROGRESS" | "COMPLETED";

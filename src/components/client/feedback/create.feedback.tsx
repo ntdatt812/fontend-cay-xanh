@@ -180,7 +180,7 @@ const ModalPostFeedback = (props: IProps) => {
                 }}
                 destroyOnClose={true}
                 okButtonProps={{ loading: isSubmit }}
-                okText={"Tạo mới"}
+                okText={"Gửi phản ánh"}
                 cancelText={"Hủy"}
                 confirmLoading={isSubmit}
                 width={window.innerWidth > 768 ? "70vw" : "90vw"}

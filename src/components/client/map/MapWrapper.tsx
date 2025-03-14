@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import { getAllTreesWithoutPaginateAPI } from '@/services/api';
 import { Button } from 'antd';
 import { FilterOutlined } from '@ant-design/icons';
-import FilterDrawer from '../filter/filterBar';
+import FilterPopover from '../filter/filterBar';
 
 // import { LatLng } from 'leaflet';
 
@@ -55,13 +55,18 @@ const defaultPosition: [number, number] = [19.76861042809915, 105.77921655662206
 //     ) : null;
 // }
 
+
 const MapWrapper = () => {
     const [trees, setTrees] = useState<ITreeTable[]>([]);
     const [openDrawer, setOpenDrawer] = useState(false);
+    const [filters, setFilters] = useState<{ khuvuc: string[]; duongkinh: string[] }>({
+        khuvuc: [],
+        duongkinh: [],
+    });
     useEffect(() => {
         const fetchTrees = async () => {
             try {
-                const res = await getAllTreesWithoutPaginateAPI()
+                const res = await getAllTreesWithoutPaginateAPI(filters);
 
                 if (res && res.data) {
                     setTrees(res.data);
@@ -70,27 +75,38 @@ const MapWrapper = () => {
                 console.error('Error fetching trees:', error);
             }
         };
+
         fetchTrees();
-    }, []);
+    }, [filters]);
+
     return (
         <div style={{ position: 'relative' }}>
-            <Button
-                onClick={() => setOpenDrawer(true)}
-                icon={<FilterOutlined style={{ fontSize: '24px' }} />}
-                shape="circle"
-                style={{
-                    position: 'absolute',
-                    top: '12%', // Đưa nút xuống 1/5 màn hình (20%)
-                    left: '12px',
-                    width: '48px',
-                    height: '48px',
-                    backgroundColor: '#fff',
-                    border: '1px solid #ddd',
-                    boxShadow: '0px 2px 6px rgba(0, 0, 0, 0.2)',
-                    cursor: 'pointer',
-                    zIndex: 1000
-                }}
-            />
+            <div>
+                <FilterPopover
+                    openDrawer={openDrawer}
+                    setOpenDrawer={setOpenDrawer}
+                    setFilters={setFilters}
+                >
+                    <Button
+                        onClick={() => setOpenDrawer(true)}
+                        icon={<FilterOutlined style={{ fontSize: '24px' }} />}
+                        shape="circle"
+                        style={{
+                            position: 'absolute',
+                            top: '12%',
+                            left: '12px',
+                            width: '48px',
+                            height: '48px',
+                            backgroundColor: '#fff',
+                            border: '1px solid #ddd',
+                            boxShadow: '0px 2px 6px rgba(0, 0, 0, 0.2)',
+                            cursor: 'pointer',
+                            zIndex: 1000
+                        }}
+                    />
+                </FilterPopover>
+            </div>
+
             <MapContainer
                 center={defaultPosition}
                 zoom={17}
@@ -103,11 +119,7 @@ const MapWrapper = () => {
                 {/* <MyComponent /> */}
                 {/* <LocationMarker /> */}
             </MapContainer>
-            <FilterDrawer
-                openDrawer={openDrawer}
-                setOpenDrawer={setOpenDrawer}
 
-            />
         </div>
     );
 };

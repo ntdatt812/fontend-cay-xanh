@@ -1,8 +1,11 @@
 import { updateStatusFeedbackAPI } from "@/services/api";
-import { App, Button, Descriptions, Drawer, Form, Select } from "antd";
+import { App, Button, Descriptions, Divider, Drawer, Form, GetProp, Image, Select, Upload, UploadProps } from "antd";
+import { UploadFile } from "antd/lib";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 const { Option } = Select;
+import { v4 as uuidv4 } from 'uuid';
+type FileType = Parameters<GetProp<UploadProps, 'beforeUpload'>>[0];
 interface IProps {
     onClose: (v: boolean) => void;
     open: boolean;
@@ -15,6 +18,9 @@ const FeedbackDetail = ({ dataInit, onClose, open, reloadTable, setDataInit }: I
     const [isSubmit, setIsSubmit] = useState<boolean>(false);
     const [form] = Form.useForm();
     const { message, notification } = App.useApp();
+    const [previewOpen, setPreviewOpen] = useState(false);
+    const [previewImage, setPreviewImage] = useState('');
+    const [fileList, setFileList] = useState<UploadFile[]>([]);
 
     useEffect(() => {
         if (dataInit) {
@@ -24,6 +30,29 @@ const FeedbackDetail = ({ dataInit, onClose, open, reloadTable, setDataInit }: I
     }, [dataInit])
 
 
+    useEffect(() => {
+        if (dataInit) {
+            let imgFeedback: any = {};
+            if (dataInit.hinhanh) {
+                imgFeedback = {
+                    uid: uuidv4(),
+                    name: dataInit.hinhanh,
+                    status: 'done',
+                    url: `${import.meta.env.VITE_BACKEND_URL}/images/feedback/${dataInit.hinhanh}`,
+                }
+            }
+            setFileList([imgFeedback])
+        }
+        console.log(fileList)
+    }, [dataInit])
+
+    const getBase64 = (file: FileType): Promise<string> =>
+        new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result as string);
+            reader.onerror = (error) => reject(error);
+        });
 
     const handleChangeStatus = async () => {
         setIsSubmit(true);
@@ -43,6 +72,19 @@ const FeedbackDetail = ({ dataInit, onClose, open, reloadTable, setDataInit }: I
         setIsSubmit(false);
     }
 
+    const handlePreview = async (file: UploadFile) => {
+        if (!file.url && !file.preview) {
+            file.preview = await getBase64(file.originFileObj as FileType);
+        }
+
+        setPreviewImage(file.url || (file.preview as string));
+        setPreviewOpen(true);
+    };
+
+    const handleChange: UploadProps['onChange'] = ({ fileList: newFileList }) => {
+        setFileList(newFileList);
+    }
+
     return (
         <>
             <Drawer
@@ -50,8 +92,8 @@ const FeedbackDetail = ({ dataInit, onClose, open, reloadTable, setDataInit }: I
                 placement="right"
                 onClose={() => { onClose(false); setDataInit(null) }}
                 open={open}
-                width={"60vw"}
-                maskClosable={false}
+                width={"70vw"}
+                maskClosable={true}
                 destroyOnClose
                 extra={
 
@@ -83,8 +125,8 @@ const FeedbackDetail = ({ dataInit, onClose, open, reloadTable, setDataInit }: I
                         </Form>
                     </Descriptions.Item>
                     <Descriptions.Item label="Tiêu đề">{dataInit?.title}</Descriptions.Item>
-                    <Descriptions.Item label="Nội dung">{dataInit?.content}</Descriptions.Item>
-                    <Descriptions.Item label="Cây xanh">
+                    <Descriptions.Item span={2} label="Nội dung">{dataInit?.content}</Descriptions.Item>
+                    <Descriptions.Item span={2} label="Cây xanh">
                         {`Tên cây xanh `}<strong>{dataInit?.treeId.tencayxanh}</strong>{` tại khu vực `}
                         <strong>{dataInit?.treeId.khuvuc}</strong>{` có toạ độ (`}
                         <strong>{dataInit?.treeId.lat}</strong>{`, `}
@@ -92,8 +134,31 @@ const FeedbackDetail = ({ dataInit, onClose, open, reloadTable, setDataInit }: I
                     </Descriptions.Item>
                     <Descriptions.Item label="Ngày nhận">{dataInit && dataInit.createdAt ? dayjs(dataInit.createdAt).format('DD-MM-YYYY HH:mm:ss') : ""}</Descriptions.Item>
                     <Descriptions.Item label="Ngày cập nhật">{dataInit && dataInit.updatedAt ? dayjs(dataInit.updatedAt).format('DD-MM-YYYY HH:mm:ss') : ""}</Descriptions.Item>
-
                 </Descriptions>
+                <Divider orientation="left" > Ảnh cây xanh </Divider>
+                <Upload
+                    action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                    listType="picture-card"
+                    fileList={fileList}
+                    onPreview={handlePreview}
+                    onChange={handleChange}
+                    showUploadList={
+                        { showRemoveIcon: false }
+                    }
+                >
+
+                </Upload>
+                {previewImage && (
+                    <Image
+                        wrapperStyle={{ display: 'none' }}
+                        preview={{
+                            visible: previewOpen,
+                            onVisibleChange: (visible) => setPreviewOpen(visible),
+                            afterOpenChange: (visible) => !visible && setPreviewImage(''),
+                        }}
+                        src={previewImage}
+                    />
+                )}
             </Drawer>
         </>
     )
