@@ -1,12 +1,11 @@
 import { Marker, Popup, useMap } from 'react-leaflet';
 import { treeDetailIcon } from './mapIcons';
-import TreePopup from './TreePopup';
 import { useEffect, useRef } from 'react';
 import { LatLngTuple } from 'leaflet';
 import DetailTreePopup from './DetailTreePopup';
 
 interface IProps {
-    tree: ITreeDetail | null;
+    tree: ITreeTable | null;
 }
 
 const MapMarkerDetail = ({ tree }: IProps) => {
@@ -34,7 +33,7 @@ const MapMarkerDetail = ({ tree }: IProps) => {
             key={tree._id}
             position={[+tree.lat, +tree.lng] as LatLngTuple} // Xác định kiểu rõ ràng
             icon={treeDetailIcon}
-            ref={markerRef} // Gán ref cho Marker
+            ref={markerRef}
         >
             <Popup>
                 <DetailTreePopup

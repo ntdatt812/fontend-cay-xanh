@@ -63,7 +63,7 @@ const TreeDetail = ({ tree, loading }: IProps) => {
                             <li><strong>Mô tả:</strong> {tree.mota}</li>
                             <li><strong>Khu vực:</strong> {tree.khuvuc}</li>
                             <li><strong>Hiện trạng:</strong> {tree.hientrang}</li>
-                            <li><strong>Đường kính:</strong> {tree.duongkinh}</li>
+                            <li><strong>Đường kính:</strong> {tree.duongkinh} cm</li>
                             <li><strong>Số hiệu:</strong> {tree.sohieu}</li>
                             <li><strong>Vĩ độ:</strong> {tree.lat}</li>
                             <li><strong>Kinh độ:</strong> {tree.lng}</li>
