@@ -30,11 +30,11 @@ const FilterPopover = ({ setFilters, openDrawer, setOpenDrawer, children }: IPro
 
     const listDuongKinh = [
         { label: "Cây loại 1: ĐK ≤ 20 cm", value: "0-20" },
-        { label: "Cây loại 2: 20 - 50 cm", value: "20-50" },
+        { label: "Cây loại 2: 21 - 50 cm", value: "21-50" },
         { label: "Cây loại 3: ĐK > 50 cm", value: "50+" },
     ];
 
-    // Cập nhật bộ lọc khi chọn checkbox
+
     const handleChangeFilter = (changedValues: any, values: any) => {
         setFilters({
             khuvuc: values.khuvuc || [],
@@ -42,7 +42,7 @@ const FilterPopover = ({ setFilters, openDrawer, setOpenDrawer, children }: IPro
         });
     };
 
-    // Nội dung của Popover
+
     const content = (
         <div className="filter-popover">
             <div className="filter-popover__header">

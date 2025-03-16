@@ -1,6 +1,6 @@
 
 import { Marker, Popup } from 'react-leaflet';
-import { treeIcon } from './mapIcons';
+import { treeIcon, treeIcon1, treeIcon2, treeIcon3 } from './mapIcons';
 import TreePopup from './TreePopup';
 import { useNavigate } from 'react-router-dom';
 import ModalPostFeedback from '../feedback/create.feedback';
@@ -16,6 +16,12 @@ const MapMarker = (props: IProps) => {
     const [openModalCreate, setOpenModalCreate] = useState<boolean>(false)
     const navigate = useNavigate();
 
+    const getTreeIcon = (duongkinh: number) => {
+        if (duongkinh <= 20) return treeIcon1;
+        if (duongkinh > 20 && duongkinh <= 50) return treeIcon2;
+        return treeIcon3;
+    };
+
     return (
         <>
             {trees.map((tree) => {
@@ -23,7 +29,7 @@ const MapMarker = (props: IProps) => {
                     <Marker
                         key={tree._id}
                         position={[+tree.lat, +tree.lng]}
-                        icon={treeIcon}
+                        icon={getTreeIcon(tree.duongkinh)}
                         eventHandlers={{
                             click: (e) => {
                                 const map = e.target._map;
