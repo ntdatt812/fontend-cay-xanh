@@ -1,25 +1,25 @@
-import { deleteUserAPI, getUserAPI } from '@/services/api';
+import { deleteUserAPI, getTasksAPI, getUserAPI } from '@/services/api';
 import { dateRangeValidate } from '@/services/helper';
 import { DeleteTwoTone, EditTwoTone, PlusOutlined } from '@ant-design/icons';
 import type { ActionType, ProColumns } from '@ant-design/pro-components';
 import { ProTable } from '@ant-design/pro-components';
 import { App, Button, Popconfirm } from 'antd';
 import { useRef, useState } from 'react';
-import DetailUser from './detail.user';
-import CreateUser from './create.user';
-import UpdateUser from './update.user';
+
 import dayjs from 'dayjs';
+import DetailTask from './detail.task';
+import CreateTask from './create.task';
+import AccessControl from '@/components/auth/role.guard';
 
 
 type TSearch = {
-    name: string;
-    email: string;
+    title: string;
     createdAt: string;
     createdAtRange: string;
 }
 
 
-const TableUser = () => {
+const TableTask = () => {
     const actionRef = useRef<ActionType>();
     const [meta, setMeta] = useState({
         current: 1,
@@ -28,12 +28,12 @@ const TableUser = () => {
         total: 0
     });
     const [openViewDetail, setOpenViewDetail] = useState<boolean>(false);
-    const [dataViewDetail, setDataViewDetail] = useState<IUserTable | null>(null);
+    const [dataViewDetail, setDataViewDetail] = useState<ITaskTable | null>(null);
 
     const [openModalCreate, setOpenModalCreate] = useState<boolean>(false);
 
     const [openModalUpdate, setOpenModalUpdate] = useState<boolean>(false);
-    const [dataUpdate, setDataUpdate] = useState<IUserTable | null>(null);
+    const [dataUpdate, setDataUpdate] = useState<ITaskTable | null>(null);
     const [isDeleteUser, setIsDeleteUser] = useState<boolean>(false);
     const { message, notification } = App.useApp()
 
@@ -53,7 +53,7 @@ const TableUser = () => {
         setIsDeleteUser(false)
     }
 
-    const columns: ProColumns<IUserTable>[] = [
+    const columns: ProColumns<ITaskTable>[] = [
         {
             dataIndex: 'index',
             valueType: 'indexBorder',
@@ -68,6 +68,7 @@ const TableUser = () => {
                     <a
                         onClick={() => {
                             setDataViewDetail(entity);
+                            console.log("check entity: ", entity)
                             setOpenViewDetail(true);
                         }}
                         href='#'>{entity._id}</a>
@@ -75,25 +76,21 @@ const TableUser = () => {
             },
         },
         {
-            title: 'Tên người dùng',
-            dataIndex: 'name',
+            title: 'Tiêu đề',
+            dataIndex: 'title',
         },
         {
-            title: 'Email',
-            dataIndex: 'email'
+            title: 'Nội dung',
+            dataIndex: 'description'
         },
         {
-            title: 'Ngày tạo',
+            title: 'Created At',
             dataIndex: 'createdAtRange',
             valueType: 'dateRange',
             hidden: true
         },
         {
-            title: 'Quyền',
-            dataIndex: 'role',
-        },
-        {
-            title: 'Ngày sửa',
+            title: 'Created At',
             dataIndex: 'createdAt',
             hideInSearch: true,
             valueType: "date",
@@ -107,7 +104,7 @@ const TableUser = () => {
             },
         },
         {
-            title: 'Ngày sửa',
+            title: 'Updated At',
             dataIndex: 'updatedAt',
             hideInSearch: true,
             valueType: "date",
@@ -133,22 +130,25 @@ const TableUser = () => {
                                 setOpenModalUpdate(true);
                             }}
                         />
-                        <Popconfirm
-                            placement="leftTop"
-                            title={"Xác nhận xóa user"}
-                            description={`Bạn có chắc chắn muốn xóa ${entity.name} không ?`}
-                            onConfirm={() => handleDeleteUser(entity._id)}
-                            okText="Xác nhận"
-                            cancelText="Hủy"
-                            okButtonProps={{ loading: isDeleteUser }}
-                        >
-                            <span style={{ cursor: "pointer", marginLeft: 20 }}>
-                                <DeleteTwoTone
-                                    twoToneColor="#ff4d4f"
-                                    style={{ cursor: "pointer" }}
-                                />
-                            </span>
-                        </Popconfirm>
+                        <AccessControl allowedRoles={["ADMIN"]}>
+                            <Popconfirm
+                                placement="leftTop"
+                                title={"Xác nhận xóa user"}
+                                description={`Bạn có chắc chắn muốn xóa công việc không ?`}
+                                onConfirm={() => handleDeleteUser(entity._id)}
+                                okText="Xác nhận"
+                                cancelText="Hủy"
+                                okButtonProps={{ loading: isDeleteUser }}
+                            >
+                                <span style={{ cursor: "pointer", marginLeft: 20 }}>
+                                    <DeleteTwoTone
+                                        twoToneColor="#ff4d4f"
+                                        style={{ cursor: "pointer" }}
+                                    />
+                                </span>
+                            </Popconfirm>
+                        </AccessControl>
+
                     </>
                 )
             }
@@ -161,7 +161,7 @@ const TableUser = () => {
 
     return (
         <>
-            <ProTable<IUserTable, TSearch>
+            <ProTable<ITaskTable, TSearch>
                 columns={columns}
                 actionRef={actionRef}
                 cardBordered
@@ -172,12 +172,12 @@ const TableUser = () => {
                     let query = "";
                     if (params) {
                         query += `current=${params.current}&pageSize=${params.pageSize}`
-                        if (params.email) {
-                            query += `&email=/${params.email}/i`
+                        if (params.title) {
+                            query += `&title=/${params.title}/i`
                         }
-                        if (params.name) {
-                            query += `&name=/${params.name}/i`
-                        }
+                        // if (params.name) {
+                        //     query += `&name=/${params.name}/i`
+                        // }
 
                         const createDateRange = dateRangeValidate(params.createdAtRange);
                         if (createDateRange) {
@@ -187,12 +187,14 @@ const TableUser = () => {
                     //default
                     query += `&sort=-createdAt`;
 
+                    query += "&populate=assignedTo&fields=assignedTo._id,assignedTo.email,assignedTo.name";
+
                     if (sort && sort.createdAt) {
                         query += `&sort=${sort.createdAt === "ascend" ? "createdAt" : "-createdAt"}`
                     }
 
 
-                    const res = await getUserAPI(query);
+                    const res = await getTasksAPI(query);
                     if (res.data) {
                         setMeta(res.data.meta);
                     }
@@ -215,7 +217,7 @@ const TableUser = () => {
                     }
                 }
                 dateFormatter="string"
-                headerTitle="Người dùng"
+                headerTitle="Công việc"
                 toolBarRender={() => [
                     <Button
                         key="button"
@@ -225,31 +227,24 @@ const TableUser = () => {
                         }}
                         type="primary"
                     >
-                        Thêm người dùng
+                        Thêm mới
                     </Button>
 
                 ]}
             />
-            <DetailUser
-                openViewDetail={openViewDetail}
-                setOpenViewDetail={setOpenViewDetail}
+            <DetailTask
                 dataViewDetail={dataViewDetail}
                 setDataViewDetail={setDataViewDetail}
+                openViewDetail={openViewDetail}
+                setOpenViewDetail={setOpenViewDetail}
             />
-            <CreateUser
+            <CreateTask
                 openModalCreate={openModalCreate}
                 setOpenModalCreate={setOpenModalCreate}
                 refreshTable={refreshTable}
-            />
-            <UpdateUser
-                openModalUpdate={openModalUpdate}
-                setOpenModalUpdate={setOpenModalUpdate}
-                refreshTable={refreshTable}
-                setDataUpdate={setDataUpdate}
-                dataUpdate={dataUpdate}
             />
         </>
     );
 };
 
-export default TableUser;
+export default TableTask;

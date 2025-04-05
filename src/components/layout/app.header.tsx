@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { Dropdown, Avatar, Space, Drawer, Divider, App } from 'antd';
 import { UserOutlined, MenuOutlined } from '@ant-design/icons';
 import { useCurrentApp } from 'components/context/app.context';
@@ -31,7 +31,7 @@ const AppHeader = () => {
     ];
 
     const userMenuItems = [
-        ...(user?.role === 'ADMIN' ? [{ label: "Trang Quản Trị", key: '/admin' }] : []),
+        ...(user?.role === 'ADMIN' || user?.role === 'EMPLOYEE' ? [{ label: "Trang Quản Trị", key: '/admin' }] : []),
         { label: "Đăng Xuất", key: 'logout' }
     ];
 

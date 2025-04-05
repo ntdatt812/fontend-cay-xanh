@@ -1,52 +1,47 @@
-
-import { Descriptions, Divider, Drawer, Image, Upload } from "antd";
-import { useEffect, useState } from "react";
-import type { GetProp, UploadFile, UploadProps } from 'antd';
-import dayjs from "dayjs";
 import { FORMATE_DATE_VN } from "@/services/helper";
+import { Descriptions, Drawer, GetProp, Image, Upload, UploadFile, UploadProps } from "antd";
+import { Divider } from "antd/lib";
+import dayjs from 'dayjs';
+import { useEffect, useState } from "react";
 type FileType = Parameters<GetProp<UploadProps, 'beforeUpload'>>[0];
 import { v4 as uuidv4 } from 'uuid';
+
 interface IProps {
     openViewDetail: boolean;
     setOpenViewDetail: (v: boolean) => void;
-    dataViewDetail: ITreeTable | null;
-    setDataViewDetail: (v: ITreeTable | null) => void;
+    dataViewDetail: ITaskTable | null;
+    setDataViewDetail: (v: ITaskTable | null) => void;
+
 }
 
-
-const DetailTree = (props: IProps) => {
-    const {
-        openViewDetail, setOpenViewDetail,
-        dataViewDetail, setDataViewDetail
-    } = props;
-
-    const [previewOpen, setPreviewOpen] = useState(false);
-    const [previewImage, setPreviewImage] = useState('');
-
-
+const DetailTask = (props: IProps) => {
+    const { openViewDetail, setOpenViewDetail, dataViewDetail, setDataViewDetail } = props;
     const [fileList, setFileList] = useState<UploadFile[]>([]);
-
+    const [previewImage, setPreviewImage] = useState('');
+    const [previewOpen, setPreviewOpen] = useState(false);
 
     useEffect(() => {
         if (dataViewDetail) {
-            let imgTree: any = {};
-            if (dataViewDetail.hinhanh) {
-                imgTree = {
+            let imgTask: any = {};
+            if (dataViewDetail.imageUrl) {
+                imgTask = {
                     uid: uuidv4(),
-                    name: dataViewDetail.hinhanh,
+                    name: dataViewDetail.imageUrl,
                     status: 'done',
-                    url: `${import.meta.env.VITE_BACKEND_URL}/images/tree/${dataViewDetail.hinhanh}`,
+                    url: `${import.meta.env.VITE_BACKEND_URL}/images/task/${dataViewDetail.imageUrl}`,
                 }
             }
-            setFileList([imgTree])
+            setFileList([imgTask])
         }
     }, [dataViewDetail])
+
+
+
 
     const onClose = () => {
         setOpenViewDetail(false);
         setDataViewDetail(null);
     }
-
     const getBase64 = (file: FileType): Promise<string> =>
         new Promise((resolve, reject) => {
             const reader = new FileReader();
@@ -67,43 +62,43 @@ const DetailTree = (props: IProps) => {
     const handleChange: UploadProps['onChange'] = ({ fileList: newFileList }) => {
         setFileList(newFileList);
     }
+
     return (
         <>
             <Drawer
                 title="Chức năng xem chi tiết"
-                width={"80vw"}
+                width={"50vw"}
                 onClose={onClose}
                 open={openViewDetail}
             >
                 <Descriptions
-                    title="Thông tin Book"
+                    title="Thông tin công việc"
                     bordered
                     column={2}
                 >
-                    <Descriptions.Item label="Id">{dataViewDetail?._id}</Descriptions.Item>
-                    <Descriptions.Item label="Tên cây xanh">{dataViewDetail?.tencayxanh}</Descriptions.Item>
-                    <Descriptions.Item label="Chiều cao">{dataViewDetail?.chieucao} cm</Descriptions.Item>
-                    <Descriptions.Item label="Năm trồng">{dataViewDetail?.namtrong}</Descriptions.Item>
-                    <Descriptions.Item span={2} label="Mô tả">{dataViewDetail?.mota}</Descriptions.Item>
-                    <Descriptions.Item label="Khu vực">{dataViewDetail?.khuvuc}</Descriptions.Item>
-                    <Descriptions.Item label="Số hiệu">{dataViewDetail?.sohieu}</Descriptions.Item>
-                    <Descriptions.Item span={2} label="Tình trạng">{dataViewDetail?.hientrang}</Descriptions.Item>
-                    <Descriptions.Item label="Đường kính">{dataViewDetail?.duongkinh} cm</Descriptions.Item>
-                    <Descriptions.Item label="Chu vi">{dataViewDetail?.chuvi} cm</Descriptions.Item>
-                    <Descriptions.Item label="Kinh độ">{dataViewDetail?.lat}</Descriptions.Item>
-                    <Descriptions.Item label="Vĩ độ">{dataViewDetail?.lng}</Descriptions.Item>
-                    {/* <Descriptions.Item label="Thể loại" span={2}>
-                        <Badge status="processing" text={dataViewDetail?.category} />
+                    <Descriptions.Item span={2} label="Id">{dataViewDetail?._id}</Descriptions.Item>
+                    <Descriptions.Item span={2} label="Tiêu đề">{dataViewDetail?.title}</Descriptions.Item>
+                    <Descriptions.Item span={2} label="Nội dung">{dataViewDetail?.description}</Descriptions.Item>
+                    {/* <Descriptions.Item label="Role" span={2}>
+                        <Badge status="processing" text={dataViewDetail?.role} />
                     </Descriptions.Item> */}
-
-                    <Descriptions.Item label="Created At">
+                    <Descriptions.Item label="Ngày tạo công việc">
                         {dayjs(dataViewDetail?.createdAt).format(FORMATE_DATE_VN)}
                     </Descriptions.Item>
-                    <Descriptions.Item label="Updated At">
+                </Descriptions>
+                <Divider />
+                <Descriptions
+                    title="Báo cáo của nhân viên"
+                    bordered
+                    column={2}
+                >
+                    <Descriptions.Item span={2} label="Nội dung báo cáo">{dataViewDetail?.report ?? "Chưa báo cáo"}</Descriptions.Item>
+                    <Descriptions.Item span={2} label="Người thực hiện">{dataViewDetail?.assignedTo.name}</Descriptions.Item>
+                    <Descriptions.Item label="Ngày báo cáo">
                         {dayjs(dataViewDetail?.updatedAt).format(FORMATE_DATE_VN)}
                     </Descriptions.Item>
                 </Descriptions>
-                <Divider orientation="left" > Ảnh cây xanh </Divider>
+                <Divider orientation="center" >Hình ảnh báo cáo</Divider>
                 <Upload
                     action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
                     listType="picture-card"
@@ -114,7 +109,6 @@ const DetailTree = (props: IProps) => {
                         { showRemoveIcon: false }
                     }
                 >
-
                 </Upload>
                 {previewImage && (
                     <Image
@@ -132,5 +126,4 @@ const DetailTree = (props: IProps) => {
         </>
     )
 }
-
-export default DetailTree;
+export default DetailTask;

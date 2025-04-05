@@ -15,6 +15,8 @@ import { logoutAPI } from '@/services/api';
 type MenuItem = Required<MenuProps>['items'][number];
 import { IoLeafOutline } from 'react-icons/io5';
 import { VscFeedback } from 'react-icons/vsc';
+import { FaTasks } from 'react-icons/fa';
+
 
 const { Content, Footer, Sider } = Layout;
 
@@ -40,23 +42,13 @@ const LayoutAdmin = () => {
             key: 'dashboard',
             icon: <AppstoreOutlined />
         },
-        {
-            label: <Link to='/admin/user'>Quản lý người dùng</Link>,
-            key: 'user',
-            icon: <UserOutlined />,
-            // children: [
-            //     {
-            //         label: <Link to='/admin/user'>Quản lý người dùng</Link>,
-            //         key: 'crud',
-            //         icon: <TeamOutlined />,
-            //     },
-            //     // {
-            //     //     label: 'Files1',
-            //     //     key: 'file1',
-            //     //     icon: <TeamOutlined />,
-            //     // }
-            // ]
-        },
+        ...(user?.role !== "EMPLOYEE" ? [ // Ẩn menu "Quản lý người dùng" nếu role là EMPLOY
+            {
+                label: <Link to='/admin/user'>Quản lý người dùng</Link>,
+                key: 'user',
+                icon: <UserOutlined />
+            }
+        ] : []),
         {
             label: <Link to='/admin/tree'>Quản lý cây</Link>,
             key: 'tree',
@@ -67,6 +59,22 @@ const LayoutAdmin = () => {
             key: 'feedback',
             icon: <VscFeedback />
         },
+
+        ...(user?.role !== "EMPLOYEE" ? [
+            {
+                label: <Link to='/admin/task'>Quản lý công việc</Link>,
+                key: 'task',
+                icon: <FaTasks />
+            }
+        ] : []),
+        ...(user?.role == "EMPLOYEE" ? [ // Ẩn menu "Quản lý người dùng" nếu role là EMPLOY
+            {
+                label: <Link to='/admin/employee-task'>Công việc của bạn</Link>,
+                key: 'employee-task',
+                icon: <FaTasks />
+            }
+        ] : []),
+
 
     ];
 
@@ -99,6 +107,7 @@ const LayoutAdmin = () => {
             <Outlet />
         )
     }
+
     if (isAuthenticated === true && location.pathname.includes("admin") === true) {
         if (user?.role === "USER") {
             return (

@@ -26,16 +26,16 @@ export const getUserAPI = (query: string) => {
 }
 
 export const createUserAPI = (name: string, email: string,
-    password: string) => {
+    password: string, role: string) => {
     const urlBackend = "/api/v1/users";
     return axios.post<IBackendRes<IRegister>>(urlBackend,
-        { name, email, password })
+        { name, email, password, role })
 }
 
-export const updateUserAPI = (_id: string, name: string, email: string) => {
+export const updateUserAPI = (_id: string, name: string, email: string, role: string) => {
     const urlBackend = "/api/v1/users";
     return axios.patch<IBackendRes<IRegister>>(urlBackend,
-        { _id, name, email })
+        { _id, name, email, role })
 }
 
 export const deleteUserAPI = (_id: string) => {
@@ -117,7 +117,6 @@ export const getAllTreesWithoutPaginateAPI = (filters: { khuvuc: string[]; duong
     });
 };
 
-
 export const getTreeByIdAPI = (_id: string) => {
     const urlBackend = `/api/v1/trees/${_id}`;
     return axios.get<IBackendRes<ITreeTable>>(urlBackend)
@@ -151,3 +150,26 @@ export const deleteFeedbackAPI = (_id: string) => {
     const urlBackend = `/api/v1/feedbacks/${_id}`;
     return axios.delete<IBackendRes<IRegister>>(urlBackend)
 }
+
+export const getTasksAPI = (query: string) => {
+    const urlBackend = `/api/v1/tasks?${query}`;
+    return axios.get<IBackendRes<IModelPaginate<ITaskTable>>>(urlBackend)
+}
+
+export const createTaskAPI = (title: string, description: string, assignedTo: string) => {
+    const urlBackend = "/api/v1/tasks";
+    return axios.post<IBackendRes<IRegister>>(urlBackend, { title, description, assignedTo })
+}
+
+export const getEmployeeTasksAPI = async (userId: string) => {
+    const urlBackend = `api/v1/tasks/user/${userId}`;
+
+    return axios.get(urlBackend);
+};
+
+export const UpdateEmployTaskAPI = (_id: string, status: string, report: string, imageUrl: string) => {
+    const urlBackend = `/api/v1/tasks/${_id}`;
+    return axios.patch<IBackendRes<ITaskTable>>(urlBackend, { status, report, imageUrl })
+}
+
+

@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import { App, Divider, Form, Input, Modal } from 'antd';
+import { App, Divider, Form, Input, Modal, Select } from 'antd';
 import type { FormProps } from 'antd';
 import { createUserAPI } from '@/services/api';
+import { Option } from 'antd/es/mentions';
 
 interface IProps {
     openModalCreate: boolean;
@@ -13,6 +14,7 @@ type FieldType = {
     name: string;
     password: string;
     email: string;
+    role: string;
 };
 
 const CreateUser = (props: IProps) => {
@@ -25,9 +27,9 @@ const CreateUser = (props: IProps) => {
 
 
     const onFinish: FormProps<FieldType>['onFinish'] = async (values) => {
-        const { name, password, email } = values;
+        const { name, password, email, role } = values;
         setIsSubmit(true)
-        const res = await createUserAPI(name, email, password);
+        const res = await createUserAPI(name, email, password, role);
         if (res && res.data) {
             message.success('Tạo mới user thành công');
             form.resetFields();
@@ -82,6 +84,7 @@ const CreateUser = (props: IProps) => {
                     >
                         <Input.Password />
                     </Form.Item>
+
                     <Form.Item<FieldType>
                         labelCol={{ span: 24 }}
                         label="Email"
@@ -92,6 +95,19 @@ const CreateUser = (props: IProps) => {
                         ]}
                     >
                         <Input />
+                    </Form.Item>
+                    <Form.Item<FieldType>
+                        labelCol={{ span: 24 }}
+                        label="Quyền của người dùng"
+                        name="role"
+                    >
+                        <Select
+                            style={{ width: "100%" }}
+                        >
+                            <Option value="USER">Người dùng</Option>
+                            <Option value="EMPLOYEE">Nhân viên</Option>
+                            <Option value="ADMIN">Amin</Option>
+                        </Select>
                     </Form.Item>
                 </Form>
             </Modal>

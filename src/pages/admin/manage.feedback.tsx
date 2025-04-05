@@ -1,4 +1,5 @@
 import FeedbackDetail from "@/components/admin/feedback/detail.feedback";
+import AccessControl from "@/components/auth/role.guard";
 import { deleteFeedbackAPI, getFeedbacksAPI } from "@/services/api";
 import { dateRangeValidate } from "@/services/helper";
 import { DeleteTwoTone, EditTwoTone } from "@ant-design/icons";
@@ -65,24 +66,25 @@ const ManageFeedbackPage = () => {
                                 setDataUpdate(entity);
                             }}
                         /> */}
-                        <Popconfirm
-                            placement="leftTop"
-                            title="Xác nhận phản ánh"
-                            description={
-                                <>
-                                    Bạn có chắc chắn muốn phản ánh <b>{entity.title}</b> không?
-                                </>
-                            }
-                            onConfirm={() => handleDeleteFeedback(entity._id)}
-                            okText="Xác nhận"
-                            cancelText="Hủy"
-                            okButtonProps={{ loading: isDeleteTree }}
-                        >
-                            <span style={{ cursor: "pointer" }}>
-                                <DeleteTwoTone twoToneColor="#ff4d4f" />
-                            </span>
-                        </Popconfirm>
-
+                        <AccessControl allowedRoles={["ADMIN"]}>
+                            <Popconfirm
+                                placement="leftTop"
+                                title="Xác nhận phản ánh"
+                                description={
+                                    <>
+                                        Bạn có chắc chắn muốn phản ánh <b>{entity.title}</b> không?
+                                    </>
+                                }
+                                onConfirm={() => handleDeleteFeedback(entity._id)}
+                                okText="Xác nhận"
+                                cancelText="Hủy"
+                                okButtonProps={{ loading: isDeleteTree }}
+                            >
+                                <span style={{ cursor: "pointer" }}>
+                                    <DeleteTwoTone twoToneColor="#ff4d4f" />
+                                </span>
+                            </Popconfirm>
+                        </AccessControl>
                     </>
 
                 )
@@ -135,7 +137,7 @@ const ManageFeedbackPage = () => {
                     total: meta.total,
                     showTotal: (total, range) => `${range[0]}-${range[1]} trên ${total} hàng`,
                 }}
-                headerTitle="Table Feedback"
+                headerTitle="Phản ánh"
             />
             <FeedbackDetail
                 open={openViewDetail}

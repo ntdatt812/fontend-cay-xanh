@@ -22,6 +22,8 @@ import enUS from 'antd/locale/en_US';
 import ManageFeedbackPage from './pages/admin/manage.feedback';
 import FeedbackPage from './pages/client/feedback/feedback';
 import DetailFeedback from './pages/client/feedback/detail.feedback';
+import ManageTaskPage from './pages/admin/manage.task';
+import EmployeeTaskPage from './pages/admin/task.employee';
 
 const router = createBrowserRouter([
   {
@@ -90,14 +92,22 @@ const router = createBrowserRouter([
           </ProtectedRoute>
         ),
       },
-      // {
-      //   path: "/admin",
-      //   element: (
-      //     <ProtectedRoute>
-      //       <div>admin page</div>
-      //     </ProtectedRoute>
-      //   ),
-      // },
+      {
+        path: "task",
+        element: (
+          <ProtectedRoute>
+            <ManageTaskPage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "employee-task",
+        element: (
+          <ProtectedRoute>
+            <EmployeeTaskPage />
+          </ProtectedRoute>
+        ),
+      },
 
     ]
   },

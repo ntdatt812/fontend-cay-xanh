@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
-import { App, Divider, Form, Input, Modal } from 'antd';
+import { App, Divider, Form, Input, Modal, Select } from 'antd';
 import type { FormProps } from 'antd';
 import { updateUserAPI } from '@/services/api';
+import { Option } from 'antd/es/mentions';
 
 
 interface IProps {
@@ -16,6 +17,7 @@ type FieldType = {
     _id: string;
     email: string;
     name: string;
+    role: string;
 };
 
 const UpdateUser = (props: IProps) => {
@@ -34,14 +36,15 @@ const UpdateUser = (props: IProps) => {
                 _id: dataUpdate._id,
                 name: dataUpdate.name,
                 email: dataUpdate.email,
+                role: dataUpdate.role
             })
         }
     }, [dataUpdate])
 
     const onFinish: FormProps<FieldType>['onFinish'] = async (values) => {
-        const { _id, name, email } = values;
+        const { _id, name, email, role } = values;
         setIsSubmit(true)
-        const res = await updateUserAPI(_id, name, email);
+        const res = await updateUserAPI(_id, name, email, role);
         if (res && res.data) {
             message.success('Cập nhật user thành công');
             form.resetFields();
@@ -114,6 +117,20 @@ const UpdateUser = (props: IProps) => {
                         rules={[{ required: true, message: 'Vui lòng nhập tên hiển thị!' }]}
                     >
                         <Input />
+                    </Form.Item>
+
+                    <Form.Item<FieldType>
+                        labelCol={{ span: 24 }}
+                        label="Quyền của người dùng"
+                        name="role"
+                    >
+                        <Select
+                            style={{ width: "100%" }}
+                        >
+                            <Option value="USER">Người dùng</Option>
+                            <Option value="EMPLOYEE">Nhân viên</Option>
+                            <Option value="ADMIN">Amin</Option>
+                        </Select>
                     </Form.Item>
                 </Form>
             </Modal>

@@ -23,6 +23,7 @@ const ProtectedRoute = (props: IProps) => {
     }
 
     const isAdminRoute = location.pathname.includes("admin");
+
     if (isAuthenticated === true && isAdminRoute === true) {
         const role = user?.role;
         if (role === "USER") {
@@ -36,7 +37,6 @@ const ProtectedRoute = (props: IProps) => {
             )
         }
     }
-
     return (
         <>
             {props.children}

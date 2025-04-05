@@ -39,7 +39,7 @@ declare global {
         name: string,
         role: string,
         avatar: string,
-        id: string,
+        _id: string,
     }
 
     interface IFetchAccount {
@@ -74,6 +74,7 @@ declare global {
         createdAt: string;
         updatedAt: string;
     }
+
     interface ITree {
         _id: string,
         tencayxanh: string,
@@ -112,5 +113,19 @@ declare global {
         createdAt: string;
         updatedAt: string;
         updatedBy: IUpdateAt;
+    }
+
+    interface ITaskTable {
+        _id: string;
+        title: string;
+        status: "PENDING" | "IN_PROGRESS" | "COMPLETED";
+        imageUrl: string;
+        report: string;
+        description: string;
+        assignedTo: IUpdateAt;
+        createdBy: IUser;
+        createdAt: string;
+        updatedAt: string;
+        updatedBy: IUser;
     }
 }

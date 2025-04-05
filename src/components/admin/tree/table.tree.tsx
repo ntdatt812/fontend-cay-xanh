@@ -222,7 +222,7 @@ const TableTree = () => {
                     }
                 }
 
-                headerTitle="Table tree"
+                headerTitle="Cây xanh"
                 toolBarRender={() => [
 
 
