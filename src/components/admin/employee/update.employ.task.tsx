@@ -12,7 +12,6 @@ import { UpdateEmployTaskAPI, uploadFileAPI } from '@/services/api';
 import { v4 as uuidv4 } from 'uuid';
 import { Option } from 'antd/es/mentions';
 
-const { TextArea } = Input;
 type FileType = Parameters<GetProp<UploadProps, 'beforeUpload'>>[0];
 
 interface IProps {
@@ -248,9 +247,9 @@ const UpdateEmployTask = (props: IProps) => {
                                     style={{ width: "100%" }}
                                     defaultValue={dataUpdate?.status}
                                 >
-                                    <Option value="PENDING">Đã gửi</Option>
-                                    <Option value="IN_PROGRESS">Đang được xử lý<nav></nav></Option>
-                                    <Option value="COMPLETED">Đã xử lý</Option>
+                                    <Option value="PENDING">Chưa thực hiện</Option>
+                                    <Option value="IN_PROGRESS">Đang thực hiện</Option>
+                                    <Option value="COMPLETED">Đã hoàn thành</Option>
                                 </Select>
                             </Form.Item>
                         </Col>

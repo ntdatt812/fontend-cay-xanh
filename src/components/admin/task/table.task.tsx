@@ -148,7 +148,6 @@ const TableTask = () => {
                                 </span>
                             </Popconfirm>
                         </AccessControl>
-
                     </>
                 )
             }
@@ -175,10 +174,6 @@ const TableTask = () => {
                         if (params.title) {
                             query += `&title=/${params.title}/i`
                         }
-                        // if (params.name) {
-                        //     query += `&name=/${params.name}/i`
-                        // }
-
                         const createDateRange = dateRangeValidate(params.createdAtRange);
                         if (createDateRange) {
                             query += `&createdAt>=${createDateRange[0]}&createdAt<=${createDateRange[1]}`

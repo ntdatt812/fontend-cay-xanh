@@ -17,15 +17,12 @@ import { IoLeafOutline } from 'react-icons/io5';
 import { VscFeedback } from 'react-icons/vsc';
 import { FaTasks } from 'react-icons/fa';
 
-
 const { Content, Footer, Sider } = Layout;
-
 
 const LayoutAdmin = () => {
     const [collapsed, setCollapsed] = useState(false);
     const [activeMenu, setActiveMenu] = useState('dashboard');
     const { user, setUser, setIsAuthenticated, isAuthenticated } = useCurrentApp();
-
 
     const handleLogout = async () => {
         const res = await logoutAPI();
@@ -67,9 +64,9 @@ const LayoutAdmin = () => {
                 icon: <FaTasks />
             }
         ] : []),
-        ...(user?.role == "EMPLOYEE" ? [ // Ẩn menu "Quản lý người dùng" nếu role là EMPLOY
+        ...(user?.role == "EMPLOYEE" ? [
             {
-                label: <Link to='/admin/employee-task'>Công việc của bạn</Link>,
+                label: <Link to='/admin/employee-task'>Công việc của tôi</Link>,
                 key: 'employee-task',
                 icon: <FaTasks />
             }
@@ -128,7 +125,7 @@ const LayoutAdmin = () => {
                     collapsed={collapsed}
                     onCollapse={(value) => setCollapsed(value)}>
                     <div style={{ height: 32, margin: 16, textAlign: 'center' }}>
-                        {collapsed === false ? <>Xin chào: <strong>{user?.name}</strong></> : <>ADMIN</>}
+                        {collapsed === false ? <>Xin chào: <strong>{user?.name}</strong></> : <>{user?.role === "ADMIN" ? <>ADMIN</> : <>NHÂN VIÊN</>}</>}
                     </div>
                     <hr />
                     <br />
@@ -147,7 +144,6 @@ const LayoutAdmin = () => {
                         alignItems: "center",
                         justifyContent: "space-between",
                         padding: "0 15px",
-
                     }}>
                         <span>
                             {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {

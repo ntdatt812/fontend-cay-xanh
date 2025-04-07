@@ -267,7 +267,7 @@ const CreateTree = (props: IProps) => {
                                 labelCol={{ span: 24 }}
                                 label="Số hiệu"
                                 name="sohieu"
-                                rules={[{ required: true, message: 'Vui lòng nhập năm trồng!' }]}
+                                rules={[{ required: true, message: 'Vui lòng nhập số hiệu!' }]}
                             >
                                 <Input />
                             </Form.Item>
@@ -277,7 +277,7 @@ const CreateTree = (props: IProps) => {
                                 labelCol={{ span: 24 }}
                                 label="Chu vi thân"
                                 name="chuvi"
-                                rules={[{ required: true, message: 'Vui lòng nhập đường kính của cây!' }]}
+                                rules={[{ required: true, message: 'Vui lòng nhập chu vi của cây!' }]}
                             >
                                 <InputNumber
                                     controls={false}

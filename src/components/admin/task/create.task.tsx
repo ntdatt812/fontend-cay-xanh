@@ -35,7 +35,8 @@ const CreateTask = (props: IProps) => {
         async function fetchUserList() {
             setLoadingUsers(true);
             try {
-                const res = await getUserAPI('current=1&pageSize=100');
+                const res = await getUserAPI('current=1&pageSize=100&role=EMPLOYEE');
+                console.log("check res: ", res.data?.result);
                 if (res?.data?.result) {
                     const users: IUserSelect[] = res.data.result.map(user => ({
                         label: user.name,
@@ -111,7 +112,7 @@ const CreateTask = (props: IProps) => {
                                     }
                                 ]}
                             >
-                                <Input />
+                                <Input placeholder='Nhập tiêu đề công việc' />
                             </Form.Item>
                         </Col>
                         <Col span={24}>
