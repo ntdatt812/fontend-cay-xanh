@@ -1,13 +1,12 @@
 import TreeDetail from "@/components/client/tree/tree.detail";
 import { getTreeByIdAPI } from "@/services/api";
 import { App } from "antd";
-
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 const TreePage = () => {
     const { id } = useParams();
-    const [tree, setTree] = useState<ITreeDetail | null>(null);
+    const [tree, setTree] = useState<ITreeTable | null>(null);
     const { notification } = App.useApp()
     const [loading, setLoading] = useState<boolean>(true);
 

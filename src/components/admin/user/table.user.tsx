@@ -93,7 +93,7 @@ const TableUser = () => {
             dataIndex: 'role',
         },
         {
-            title: 'Ngày sửa',
+            title: 'Ngày tạo',
             dataIndex: 'createdAt',
             hideInSearch: true,
             valueType: "date",

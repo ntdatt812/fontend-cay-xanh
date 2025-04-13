@@ -32,7 +32,7 @@ const AppHeader = () => {
 
     const userMenuItems = [
         ...(user?.role === 'ADMIN' || user?.role === 'EMPLOYEE' ? [{ label: "Trang Quản Trị", key: '/admin' }] : []),
-        { label: "Đăng Xuất", key: 'logout' }
+        { label: <label style={{ color: "red" }}>Đăng xuất</label>, key: 'logout' }
     ];
 
     const handleMenuClick = ({ key }: { key: string }) => {
@@ -68,7 +68,7 @@ const AppHeader = () => {
                     {/* User Actions */}
                     <div className="header-actions">
                         {!isAuthenticated ? (
-                            <span style={{ cursor: "pointer" }} onClick={() => navigate('/login')}>Đăng nhập</span>
+                            <strong><span style={{ cursor: "pointer" }} onClick={() => navigate('/login')}>Đăng nhập</span></strong>
                         ) : (
                             <Dropdown menu={{ items: userMenuItems, onClick: handleMenuClick }} trigger={['click']}>
                                 <Space className="user-info">

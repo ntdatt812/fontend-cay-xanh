@@ -70,11 +70,11 @@ const FeedbackPage = () => {
         { key: "all", label: "Tất cả" },
         { key: "PENDING", label: "Chưa tiếp nhận" },
         { key: "IN_PROGRESS", label: "Đang xử lý" },
-        { key: "COMPLETED", label: "Đã hoàn thành" },
+        { key: "COMPLETED", label: "Đã phản hồi" },
     ];
 
     return (
-        <div style={{ background: "#efefef", padding: "20px 0" }}>
+        <div style={{ background: "#dff8dc", padding: "20px 0" }}>
             <div className="feedbackPage-container" style={{ maxWidth: 1440, margin: "0 auto" }}>
                 <Row gutter={[20, 20]}>
                     <Col md={24} xs={24}>
@@ -128,7 +128,7 @@ const FeedbackPage = () => {
                                                     <span className="feedback-status">
                                                         {item.status === "PENDING" && <span className="status pending">Chờ xử lý</span>}
                                                         {item.status === "IN_PROGRESS" && <span className="status in-progress">Đang xử lý</span>}
-                                                        {item.status === "COMPLETED" && <span className="status completed">Đã hoàn thành</span>}
+                                                        {item.status === "COMPLETED" && <span className="status completed">Đã phản hồi</span>}
                                                     </span>
                                                 </div>
                                                 <div className="feedback-details">

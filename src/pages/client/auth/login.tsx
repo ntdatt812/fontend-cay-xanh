@@ -1,10 +1,11 @@
-import { App, Button, Divider, Form, Input } from 'antd';
+import { App, AutoComplete, Button, Divider, Form, Input } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
 import './login.scss';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import type { FormProps } from 'antd';
 import { loginAPI } from '@/services/api';
 import { useCurrentApp } from '@/components/context/app.context';
+import { AutoCompleteProps } from 'antd/lib';
 
 type FieldType = {
     username: string;
@@ -17,6 +18,19 @@ const LoginPage = () => {
     const [isSubmit, setIsSubmit] = useState(false);
     const { message, notification } = App.useApp();
     const { setUser, setIsAuthenticated } = useCurrentApp()
+    const [options, setOptions] = React.useState<AutoCompleteProps['options']>([]);
+    const handleSearch = (value: string) => {
+        setOptions(() => {
+            if (!value || value.includes('@')) {
+                return [];
+            }
+            return ['gmail.com', 'hdu.edu.vn', 'email.com'].map((domain) => ({
+                label: `${value}@${domain}`,
+                value: `${value}@${domain}`,
+            }));
+        });
+    };
+
     const onFinish: FormProps<FieldType>['onFinish'] = async (values) => {
         const { username, password } = values;
         setIsSubmit(true);
@@ -60,7 +74,11 @@ const LoginPage = () => {
                                     { type: "email", message: "Email không đúng định dạng!" }
                                 ]}
                             >
-                                <Input />
+                                <AutoComplete
+                                    onSearch={handleSearch}
+                                    placeholder="Nhập email"
+                                    options={options}
+                                />
                             </Form.Item>
                             <Form.Item<FieldType>
                                 labelCol={{ span: 24 }} //whole column
@@ -68,7 +86,9 @@ const LoginPage = () => {
                                 name="password"
                                 rules={[{ required: true, message: 'Mật khẩu không được để trống!' }]}
                             >
-                                <Input.Password />
+                                <Input.Password
+
+                                    placeholder='Nhập mật khẩu' />
                             </Form.Item>
                             <Form.Item>
                                 <Button type="primary" htmlType="submit" loading={isSubmit}>

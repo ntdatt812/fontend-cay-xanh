@@ -48,18 +48,19 @@
             margin-bottom: 1rem;
         }
 
-        .ant-input {
+        .ant-select-selector {
             padding: 10px;
             border-radius: 8px;
-            border: none;
+            border: none !important;
             transition: all 0.3s ease-in-out;
-
-            &:focus {
-                border-color: #33691e;
-                box-shadow: 0 0 10px rgba(51, 105, 30, 0.5);
-                transform: scale(1.02);
-            }
         }
+
+        .ant-select-focused .ant-select-selector {
+            border-color: #33691e !important;
+            box-shadow: 0 0 10px rgba(51, 105, 30, 0.5);
+            transform: scale(1.02);
+        }
+
 
         .ant-input-password {
             padding: 10px;

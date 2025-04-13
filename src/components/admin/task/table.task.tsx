@@ -1,4 +1,4 @@
-import { deleteUserAPI, getTasksAPI, getUserAPI } from '@/services/api';
+import { deleteTaskAPI, getTasksAPI } from '@/services/api';
 import { dateRangeValidate } from '@/services/helper';
 import { DeleteTwoTone, EditTwoTone, PlusOutlined } from '@ant-design/icons';
 import type { ActionType, ProColumns } from '@ant-design/pro-components';
@@ -40,7 +40,7 @@ const TableTask = () => {
 
     const handleDeleteUser = async (_id: string) => {
         setIsDeleteUser(true)
-        const res = await deleteUserAPI(_id);
+        const res = await deleteTaskAPI(_id);
         if (res && res.data) {
             message.success('Xóa user thành công');
             refreshTable();
@@ -133,7 +133,7 @@ const TableTask = () => {
                         <AccessControl allowedRoles={["ADMIN"]}>
                             <Popconfirm
                                 placement="leftTop"
-                                title={"Xác nhận xóa user"}
+                                title={"Xác nhận xóa công việc"}
                                 description={`Bạn có chắc chắn muốn xóa công việc không ?`}
                                 onConfirm={() => handleDeleteUser(entity._id)}
                                 okText="Xác nhận"

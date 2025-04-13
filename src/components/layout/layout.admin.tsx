@@ -6,7 +6,7 @@ import {
     MenuFoldOutlined,
     MenuUnfoldOutlined,
 } from '@ant-design/icons';
-import { Layout, Menu, Dropdown, Space, Avatar } from 'antd';
+import { Layout, Menu, Dropdown, Space, Avatar, Alert, Modal } from 'antd';
 import { Outlet } from "react-router-dom";
 import { Link } from 'react-router-dom';
 import { useCurrentApp } from '../context/app.context';
@@ -34,11 +34,11 @@ const LayoutAdmin = () => {
     }
 
     const items: MenuItem[] = [
-        {
-            label: <Link to='/admin'>Thống kê</Link>,
-            key: 'dashboard',
-            icon: <AppstoreOutlined />
-        },
+        // {
+        //     label: <Link to='/admin'>Thống kê</Link>,
+        //     key: 'dashboard',
+        //     icon: <AppstoreOutlined />
+        // },
         ...(user?.role !== "EMPLOYEE" ? [ // Ẩn menu "Quản lý người dùng" nếu role là EMPLOY
             {
                 label: <Link to='/admin/user'>Quản lý người dùng</Link>,
@@ -66,7 +66,7 @@ const LayoutAdmin = () => {
         ] : []),
         ...(user?.role == "EMPLOYEE" ? [
             {
-                label: <Link to='/admin/employee-task'>Công việc của tôi</Link>,
+                label: <Link to='/admin/employee-task'>Nhiệm vụ</Link>,
                 key: 'employee-task',
                 icon: <FaTasks />
             }
@@ -77,10 +77,20 @@ const LayoutAdmin = () => {
 
     const itemsDropdown = [
         {
-            label: <label
-                style={{ cursor: 'pointer' }}
-                onClick={() => alert("me")}
-            >Quản lý tài khoản</label>,
+            label: (
+                <label
+                    style={{ cursor: 'pointer' }}
+                    onClick={() =>
+                        Modal.info({
+                            title: 'Thông tin',
+                            content: 'Chức năng đang được hoàn thiện.',
+                            okText: 'Đóng',
+                        })
+                    }
+                >
+                    Quản lý tài khoản
+                </label>
+            ),
             key: 'account',
         },
         {
@@ -89,7 +99,7 @@ const LayoutAdmin = () => {
         },
         {
             label: <label
-                style={{ cursor: 'pointer' }}
+                style={{ cursor: 'pointer', color: "red" }}
                 onClick={() => handleLogout()}
             >Đăng xuất</label>,
             key: 'logout',

@@ -98,7 +98,7 @@ const CreateUser = (props: IProps) => {
                     </Form.Item>
                     <Form.Item<FieldType>
                         labelCol={{ span: 24 }}
-                        label="Quyền của người dùng"
+                        label="Vai trò"
                         name="role"
                     >
                         <Select

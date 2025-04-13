@@ -67,18 +67,6 @@ const UpdateTree = (props: IProps) => {
     const [previewOpen, setPreviewOpen] = useState<boolean>(false);
     const [previewImage, setPreviewImage] = useState<string>('');
     const [showMap, setShowMap] = useState(false);
-    // useEffect(() => {
-    //     const fetchCategory = async () => {
-    //         const res = await getCategoryAPI();
-    //         if (res && res.data) {
-    //             const d = res.data.map(item => {
-    //                 return { label: item, value: item }
-    //             })
-    //             setListKhuVuc(d);
-    //         }
-    //     }
-    //     fetchCategory();
-    // }, [])
     useEffect(() => {
         if (dataUpdate) {
             const arrThumbnail = [
@@ -221,7 +209,7 @@ const UpdateTree = (props: IProps) => {
                 okText={"Cập nhật"}
                 cancelText={"Hủy"}
                 confirmLoading={isSubmit}
-                width={"50vw"}
+                width={"80vw"}
                 maskClosable={false}
             >
                 <Divider />

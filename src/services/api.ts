@@ -172,4 +172,12 @@ export const UpdateEmployTaskAPI = (_id: string, status: string, report: string,
     return axios.patch<IBackendRes<ITaskTable>>(urlBackend, { status, report, imageUrl })
 }
 
+export const deleteTaskAPI = (_id: string) => {
+    const urlBackend = `/api/v1/tasks/${_id}`;
+    return axios.delete<IBackendRes<IRegister>>(urlBackend)
+}
 
+export const getDashboardAPI = () => {
+    const urlBackend = `/api/v1/trees/dashboard`;
+    return axios.post<IBackendRes<IDashboard>>(urlBackend)
+}

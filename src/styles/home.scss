@@ -2,7 +2,7 @@
     // max-width: 1770px;
     margin: 0 auto;
     padding: 20px;
-    background-color: #f4fdf9;
+    background-color: #dff8dc;
     height: 100%;
 }
 
@@ -13,44 +13,568 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
+// .statistics-container {
+//     display: grid;
+//     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+//     gap: 20px;
+//     padding: 30px;
+//     background: #dff8dc;
+//     border-radius: 12px;
+//     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+//     // max-width: 900px;
+//     text-align: center;
+//     margin: 20px 0;
+// }
+
+// .stat-item {
+//     background: #dff8dc;
+//     padding: 20px;
+//     border-radius: 10px;
+//     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+//     transition: transform 0.3s, box-shadow 0.3s;
+//     color: rgb(0, 0, 0);
+
+//     &:hover {
+//         transform: translateY(-5px);
+//         box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+//     }
+
+//     .stat-icon {
+//         font-size: 100px;
+//         margin-bottom: 10px;
+//     }
+
+//     .stat-value {
+//         font-size: 48px;
+//         font-weight: 600;
+//     }
+
+//     .stat-label {
+//         font-size: 16px;
+//         opacity: 0.9;
+//     }
+// }
+
+// .stat-item-1 {
+//     background: #dff8dc;
+//     padding: 20px;
+//     border-radius: 10px;
+//     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+//     transition: transform 0.3s, box-shadow 0.3s;
+//     color: rgb(0, 0, 0);
+//     display: flex;
+//     gap: 20px;
+
+//     &:hover {
+//         transform: translateY(-5px);
+//         box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+//     }
+
+//     .totalTrees {
+//         display: flex;
+//         flex-direction: column;
+//         align-items: center;
+//         justify-content: center;
+
+//         .stat-icon {
+//             font-size: 100px;
+//             margin-bottom: 10px;
+//         }
+
+//         .stat-value {
+//             font-size: 48px;
+//             font-weight: 600;
+//         }
+
+//         .stat-label {
+//             font-size: 16px;
+//             opacity: 0.9;
+//         }
+//     }
+
+//     .listDK {
+//         display: flex;
+//         flex-direction: column;
+//         justify-content: center;
+//         font-size: 18px;
+//         text-align: left;
+//         gap: 5px;
+//     }
+// }
+
+
+// .statistics-container {
+//     padding: 25px;
+//     background-color: #f0fff4;
+//     /* Very light green */
+//     border-radius: 15px;
+//     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.05);
+//     border: 1px solid #e6ffe9;
+
+//     .ant-row {
+//         margin-left: -12px;
+//         margin-right: -12px;
+//         display: flex;
+//         /* Enable flexbox for better alignment */
+//         align-items: stretch;
+//         /* Make columns the same height */
+//     }
+
+//     .ant-col {
+//         padding-left: 12px;
+//         padding-right: 12px;
+//     }
+
+//     .stat-item,
+//     .stat-item-1 {
+//         background-color: #fff;
+//         padding: 25px;
+//         border-radius: 10px;
+//         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
+//         display: flex;
+//         flex-direction: column;
+//         align-items: center;
+//         justify-content: center;
+//         text-align: center;
+//         transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+//         border: 1px solid #f0f0f0;
+
+//         &:hover {
+//             transform: translateY(-7px);
+//             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+//         }
+//     }
+
+//     .stat-item-1 {
+//         flex-direction: row;
+//         align-items: center;
+//         /* Vertically align icon/value/label with the list */
+//         text-align: left;
+
+//         >.ant-col:first-child {
+//             display: flex;
+//             flex-direction: column;
+//             align-items: center;
+//             justify-content: center;
+//             padding-right: 25px;
+//             border-right: 2px solid #ccf2ff;
+//             background-color: #ccf2ff;
+//             /* Lighter blue */
+//             border-top-left-radius: 10px;
+//             border-bottom-left-radius: 10px;
+//         }
+//     }
+
+//     .stat-icon {
+//         font-size: 36px;
+//         margin-bottom: 15px;
+//         color: #2e7d32;
+//         /* Richer green */
+//         text-shadow: 1px 1px 0 #b8e994;
+//     }
+
+//     .stat-value {
+//         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+//         /* More modern font */
+//         font-size: 28px;
+//         font-weight: 600;
+//         /* Slightly lighter bold */
+//         color: #1976d2;
+//         /* Deeper blue */
+//         margin-bottom: 8px;
+//         text-shadow: 1px 1px 0 #b3e5fc;
+//     }
+
+//     .stat-label {
+//         font-family: 'Open Sans', sans-serif;
+//         /* Clean and readable font */
+//         font-size: 13px;
+//         color: #546e7a;
+//         /* Muted blue-gray */
+//         text-transform: uppercase;
+//         letter-spacing: 0.8px;
+//     }
+
+//     .listDK {
+//         padding-left: 25px;
+//         display: flex;
+//         flex-direction: column;
+//         justify-content: center;
+//         /* Vertically center the list */
+//         height: 100%;
+//         /* Make the list take full height of the column */
+
+//         div {
+//             font-family: 'Roboto', sans-serif;
+//             /* Another readable font */
+//             font-size: 15px;
+//             color: #37474f;
+//             /* Darker gray */
+//             line-height: 1.8;
+
+//             strong {
+//                 font-weight: 700;
+//                 color: #d84315;
+//                 /* Warm orange */
+//                 text-shadow: 0.5px 0.5px 0 #ffccbc;
+//             }
+//         }
+//     }
+
+//     // Specific styling for the smaller stat items
+//     .stat-item:nth-child(2) {
+//         background-color: #e8f5e9;
+
+//         /* Very light green */
+//         .stat-icon {
+//             color: #1b5e20;
+//         }
+
+//         .stat-value {
+//             color: #388e3c;
+//         }
+//     }
+
+//     .stat-item:nth-child(3) {
+//         background-color: #fffde7;
+
+//         /* Very light yellow */
+//         .stat-icon {
+//             color: #ffb300;
+//         }
+
+//         .stat-value {
+//             color: #f9a825;
+//         }
+//     }
+
+//     .stat-item:nth-child(4) {
+//         background-color: #e0f7fa;
+
+//         /* Very light cyan */
+//         .stat-icon {
+//             color: #00acc1;
+//         }
+
+//         .stat-value {
+//             color: #00838f;
+//         }
+//     }
+
+//     // Responsive adjustments
+//     @media (max-width: 767px) {
+//         .ant-row {
+//             flex-direction: column;
+//             /* Stack columns on smaller screens */
+//         }
+
+//         .ant-col {
+//             width: 100% !important;
+//             /* Make columns full width */
+//             margin-bottom: 16px;
+//         }
+
+//         .stat-item,
+//         .stat-item-1 {
+//             margin-bottom: 0;
+//             /* Remove bottom margin when stacked */
+//         }
+
+//         .stat-item-1 {
+//             flex-direction: column;
+//             align-items: center;
+//             text-align: center;
+
+//             >.ant-col:first-child {
+//                 border-right: none;
+//                 padding-right: 0;
+//                 margin-bottom: 16px;
+//                 border-radius: 10px 10px 0 0;
+//             }
+
+//             .listDK {
+//                 padding-left: 0;
+//                 align-items: center;
+//                 /* Center list items on small screens */
+//                 text-align: center;
+//                 height: auto;
+//                 /* Reset height */
+//             }
+//         }
+
+//         .stat-icon {
+//             font-size: 32px;
+//             margin-bottom: 12px;
+//         }
+
+//         .stat-value {
+//             font-size: 24px;
+//         }
+
+//         .stat-label {
+//             font-size: 12px;
+//         }
+
+//         .listDK div {
+//             font-size: 14px;
+//         }
+//     }
+// }
+
 .statistics-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 20px;
-    padding: 30px;
-    background: #fff;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    // max-width: 900px;
-    text-align: center;
-    margin: 20px 0;
-}
+    padding: 25px;
+    background-color: #f0fff4;
+    /* Very light green */
+    border-radius: 15px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e6ffe9;
 
-.stat-item {
-    background: linear-gradient(135deg, #aec592, #87fc51);
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
-    transition: transform 0.3s, box-shadow 0.3s;
-    color: white;
+    .ant-row {
+        margin-left: -12px;
+        margin-right: -12px;
+        display: flex;
+        /* Enable flexbox for better alignment */
+        align-items: stretch;
+        /* Make columns the same height */
+    }
 
-    &:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+    .ant-col {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+
+    .stat-item,
+    .stat-item-1 {
+        background-color: #fff;
+        padding: 25px;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        border: 1px solid #f0f0f0;
+
+        &:hover {
+            transform: translateY(-7px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+        }
+    }
+
+    .stat-item-1 {
+        flex-direction: row;
+        align-items: center;
+        /* Vertically align icon/value/label with the list */
+        text-align: left;
+
+        >.ant-col:first-child {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding-right: 25px;
+            border-right: 2px solid #ccf2ff;
+            background-color: #caeedd;
+            /* Lighter blue */
+            border-top-left-radius: 10px;
+            border-bottom-left-radius: 10px;
+
+            .stat-icon {
+                margin-left: auto;
+                margin-right: auto;
+                /* Center the icon horizontally */
+            }
+
+            .stat-value {
+                text-align: center;
+                /* Center the value */
+            }
+
+            .stat-label {
+                text-align: center;
+                /* Center the label */
+            }
+        }
     }
 
     .stat-icon {
-        font-size: 40px;
-        margin-bottom: 10px;
+        font-size: 42px;
+        /* Larger icon size */
+        margin-bottom: 15px;
+        color: #2e7d32;
+        /* Richer green */
+        text-shadow: 1px 1px 0 #b8e994;
     }
 
     .stat-value {
-        font-size: 24px;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        /* More modern font */
+        font-size: 28px;
         font-weight: 600;
+        /* Slightly lighter bold */
+        color: #1976d2;
+        /* Deeper blue */
+        margin-bottom: 8px;
+        text-shadow: 1px 1px 0 #002231;
     }
 
     .stat-label {
-        font-size: 14px;
-        opacity: 0.9;
+        font-family: 'Open Sans', sans-serif;
+        /* Clean and readable font */
+        font-size: 13px;
+        color: #546e7a;
+        /* Muted blue-gray */
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+    }
+
+    .listDK {
+        padding-left: 25px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        /* Vertically center the list */
+        height: 100%;
+        /* Make the list take full height of the column */
+
+        div {
+            font-family: 'Roboto', sans-serif;
+            /* Another readable font */
+            font-size: 15px;
+            color: #37474f;
+            /* Darker gray */
+            line-height: 1.8;
+
+            strong {
+                font-weight: 700;
+                color: #d84315;
+                /* Warm orange */
+                text-shadow: 0.5px 0.5px 0 #ffccbc;
+            }
+        }
+
+    }
+
+    // Specific styling for the smaller stat items
+    .stat-item:nth-child(2) {
+        background-color: #e8f5e9;
+
+        /* Very light green */
+        .stat-icon {
+            color: #1b5e20;
+            font-size: 48px;
+            /* Larger icon */
+        }
+
+        .stat-value {
+            color: #388e3c;
+        }
+    }
+
+    .stat-item:nth-child(3) {
+        background-color: #fffde7;
+
+        /* Very light yellow */
+        .stat-icon {
+            color: #ffb300;
+            font-size: 48px;
+            /* Larger icon */
+        }
+
+        .stat-value {
+            color: #f9a825;
+        }
+    }
+
+    .stat-item:nth-child(4) {
+        background-color: #e0f7fa;
+
+        /* Very light cyan */
+        .stat-icon {
+            color: #00acc1;
+            font-size: 48px;
+            /* Larger icon */
+        }
+
+        .stat-value {
+            color: #00838f;
+        }
+    }
+
+    // Responsive adjustments
+    @media (max-width: 767px) {
+        .ant-row {
+            flex-direction: column;
+            /* Stack columns on smaller screens */
+        }
+
+        .ant-col {
+            width: 100% !important;
+            /* Make columns full width */
+            margin-bottom: 16px;
+        }
+
+        .stat-item,
+        .stat-item-1 {
+            margin-bottom: 0;
+            /* Remove bottom margin when stacked */
+        }
+
+        .stat-item-1 {
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+
+            >.ant-col:first-child {
+                border-right: none;
+                padding-right: 0;
+                margin-bottom: 16px;
+                border-radius: 10px 10px 0 0;
+            }
+
+            .stat-icon {
+                margin-left: auto;
+                margin-right: auto;
+                /* Center the icon */
+            }
+
+            .stat-value {
+                text-align: center;
+                /* Center the value */
+            }
+
+            .stat-label {
+                text-align: center;
+                /* Center the label */
+            }
+
+            .listDK {
+                padding-left: 0;
+                align-items: center;
+                /* Center list items on small screens */
+                text-align: center;
+                height: auto;
+                /* Reset height */
+            }
+        }
+
+        .stat-icon {
+            font-size: 38px;
+            margin-bottom: 12px;
+        }
+
+        .stat-value {
+            font-size: 24px;
+        }
+
+        .stat-label {
+            font-size: 12px;
+        }
+
+        .listDK div {
+            font-size: 14px;
+        }
     }
 }

@@ -128,4 +128,17 @@ declare global {
         updatedAt: string;
         updatedBy: IUser;
     }
+
+    interface treeType {
+        cayLoai1: number,
+        cayLoai2: number,
+        cayLoai3: number
+    }
+
+    interface IDashboard {
+        totalTrees: number,
+        treeDiameter: treeType,
+        uniqueRegions: number,
+        newTrees: number
+    }
 }
