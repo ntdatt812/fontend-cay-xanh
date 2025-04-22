@@ -43,7 +43,6 @@ const FeedbackDetail = ({ dataInit, onClose, open, reloadTable, setDataInit }: I
             }
             setFileList([imgFeedback])
         }
-        console.log(fileList)
     }, [dataInit])
 
     const getBase64 = (file: FileType): Promise<string> =>

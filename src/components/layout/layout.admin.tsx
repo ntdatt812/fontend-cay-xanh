@@ -182,7 +182,7 @@ const LayoutAdmin = () => {
                         borderTop: '1px solid #e8e8e8',
                         letterSpacing: '0.5px'
                     }}>
-                        Quản lý cây xanh <span style={{ color: '#389e0d' }}>&copy;</span> Nguyễn Thành Đạt - Trường Đại học Hồng Đức <HeartTwoTone twoToneColor="#eb2f96" />
+                        Quản lý cây xanh <span style={{ color: '#389e0d' }}>&copy;</span> {import.meta.env.VITE_TENTACGIA} - Trường Đại học Hồng Đức <HeartTwoTone twoToneColor="#eb2f96" />
                     </Footer>
                 </Layout>
             </Layout>

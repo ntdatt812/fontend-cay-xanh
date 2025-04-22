@@ -71,7 +71,6 @@ const UpdateEmployTask = (props: IProps) => {
 
     const onFinish: FormProps<FieldType>['onFinish'] = async (values) => {
         setIsSubmit(true)
-        console.log("check values", values)
         const { _id, report, status } = values;
 
         const hinhanh = fileListThumbnail?.[0]?.name ?? "";

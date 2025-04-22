@@ -36,7 +36,6 @@ const CreateTask = (props: IProps) => {
             setLoadingUsers(true);
             try {
                 const res = await getUserAPI('current=1&pageSize=100&role=EMPLOYEE');
-                console.log("check res: ", res.data?.result);
                 if (res?.data?.result) {
                     const users: IUserSelect[] = res.data.result.map(user => ({
                         label: user.name,
@@ -56,7 +55,6 @@ const CreateTask = (props: IProps) => {
 
     const onFinish: FormProps<FieldType>['onFinish'] = async (values) => {
         setIsSubmit(true)
-        console.log("check value: ", values)
         const { assignedTo, description, title } = values;
         const res = await createTaskAPI(title, description, assignedTo);
         if (res && res.data) {

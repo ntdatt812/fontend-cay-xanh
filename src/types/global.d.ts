@@ -67,9 +67,13 @@ declare global {
         mota: string;
         hinhanh: string;
         sohieu: string,
+        nuoc: string;
+        phan: string;
+        saubenh: string,
         hientrang: string,
         duongkinh: number,
         chuvi: number,
+        history: IHistoryTree,
         createdBy: IUser;
         createdAt: string;
         updatedAt: string;
@@ -141,4 +145,20 @@ declare global {
         uniqueRegions: number,
         newTrees: number
     }
+    interface IHistoryTree {
+        chieucao: number;
+        duongkinh: number;
+        chuvi: number;
+        hinhanh: string;
+        nuoc: string | null;
+        phan: string | null;
+        saubenh: string | null;
+        updatedAt: string;
+        updatedBy: {
+            _id: string;
+            email: string;
+            name: string;
+        };
+    }
+
 }

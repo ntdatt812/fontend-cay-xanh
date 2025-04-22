@@ -6,6 +6,9 @@ import 'styles/tree-detail.scss';
 import MapWrapperDetail from "../map/MapWrapperDetail";
 import ModalPostFeedback from "../feedback/create.feedback";
 
+import { ProColumns, ProTable } from "@ant-design/pro-components";
+import dayjs from "dayjs";
+
 interface IProps {
     tree: ITreeTable | null;
     loading: boolean;
@@ -14,8 +17,68 @@ interface IProps {
 const TreeDetail = ({ tree, loading }: IProps) => {
     const [isPreviewVisible, setIsPreviewVisible] = useState(false);
     const [openModalCreate, setOpenModalCreate] = useState(false);
-
     const navigate = useNavigate();
+
+
+    const columns: ProColumns<IHistoryTree>[] = [
+        {
+            title: 'Ngày cập nhật',
+            dataIndex: 'updatedAt',
+            render(dom, entity, index, action, schema) {
+                return (
+                    dayjs(entity.updatedAt).format('HH:mm:ss  ||  DD/MM/YYYY')
+                )
+            },
+        },
+        {
+            title: 'Chiều cao',
+            dataIndex: 'chieucao',
+        },
+        {
+            title: 'Chu vi',
+            dataIndex: 'chuvi',
+            sorter: true
+        },
+        {
+            title: 'Đường kính',
+            dataIndex: 'duongkinh',
+            hideInSearch: true,
+        },
+        {
+            title: 'Nước',
+            dataIndex: 'nuoc',
+            sorter: true,
+        },
+        {
+            title: 'Phân bón',
+            dataIndex: 'phan',
+        },
+        {
+            title: 'Sâu bệnh',
+            dataIndex: 'saubenh',
+        },
+        {
+            title: 'Người cập nhật',
+            dataIndex: "updatedBy",
+            render(dom, entity, index, action, schema) {
+                return (
+                    <Image
+                        width={60}
+                        src={`${import.meta.env.VITE_BACKEND_URL}/images/tree/${entity.hinhanh}`}
+                    />
+                )
+            },
+        },
+        {
+            title: 'Người cập nhật',
+            dataIndex: "updatedBy",
+            render(dom, entity, index, action, schema) {
+                return (
+                    <>{entity.updatedBy.name}</>
+                )
+            },
+        }
+    ];
 
     const handleBack = () => {
         navigate(-1);
@@ -72,6 +135,23 @@ const TreeDetail = ({ tree, loading }: IProps) => {
                             <li><strong>Vĩ độ:</strong> {tree.lat}</li>
                             <li><strong>Kinh độ:</strong> {tree.lng}</li>
                         </ul>
+                    </div>
+                </Col>
+            </Row>
+            <Row gutter={[20, 20]}>
+                <Col span={24}>
+                    <div className="additional-info">
+                        <div className="title-additional">
+                            <h2>Lịch sử cập nhật và chăm sóc cây</h2>
+                        </div>
+                        <div>
+                            <ProTable<IHistoryTree>
+                                columns={columns}
+                                dataSource={Array.isArray(tree.history) ? tree.history : []}
+                                rowKey="_id"
+                                search={false}
+                            />
+                        </div>
                     </div>
                 </Col>
             </Row>

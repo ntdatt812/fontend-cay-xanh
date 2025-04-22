@@ -69,8 +69,8 @@ const DetailFeedback = () => {
                             <h1 className="feedback-title">{dataDetail.title}</h1>
                             <ul className="feedback-attributes">
                                 <li><strong>Người phản ánh:</strong> {dataDetail.fullName}</li>
-                                <li><strong>Email:</strong> {dataDetail.emailFeedback}</li>
-                                <li><strong>Số điện thoại:</strong> {dataDetail.phoneNumber}</li>
+                                {/* <li><strong>Email:</strong> {dataDetail.emailFeedback}</li>
+                                <li><strong>Số điện thoại:</strong> {dataDetail.phoneNumber}</li> */}
                                 <li><strong>Nội dung:</strong> <p>{dataDetail.content}</p></li>
                                 <li>
                                     <strong>Ngày gửi:</strong>

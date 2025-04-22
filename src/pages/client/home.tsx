@@ -10,7 +10,6 @@ const HomePage = () => {
         const fetchDashboard = async () => {
             try {
                 const res = await getDashboardAPI();
-                console.log(res)
                 if (res && res.data) {
                     setDashboard(res.data);
                 }

@@ -35,7 +35,6 @@ export const AppProvider = (props: TProps) => {
         fetchAccount();
 
     }, [])
-    console.log("check: ", user)
     return (
         <>
             {isAppLoading === false ?

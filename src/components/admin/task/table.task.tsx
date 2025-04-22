@@ -68,7 +68,6 @@ const TableTask = () => {
                     <a
                         onClick={() => {
                             setDataViewDetail(entity);
-                            console.log("check entity: ", entity)
                             setOpenViewDetail(true);
                         }}
                         href='#'>{entity._id}</a>

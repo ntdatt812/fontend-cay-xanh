@@ -42,12 +42,9 @@ const MapMarker = (props: IProps) => {
                             <TreePopup
                                 tree={tree}
                                 onDetail={() => {
-                                    console.log("Xem chi tiết của cây:", tree._id);
                                     navigate(`/tree/${tree._id}`)
                                 }}
                                 onFeedback={() => {
-                                    // Xử lý khi bấm nút Phản ánh
-                                    console.log("Phản ánh của cây:", tree._id);
                                     setTreeFeedback(tree);
                                     setOpenModalCreate(true)
                                 }}

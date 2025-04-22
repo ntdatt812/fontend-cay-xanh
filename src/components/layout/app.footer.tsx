@@ -19,7 +19,7 @@ const Footer = () => {
                 </div>
                 <p>🌱 Chung tay xây dựng môi trường xanh trong khuôn viên trường học! 🌱</p>
                 <p className="footer-copyright">
-                    © {new Date().getFullYear()} Nguyễn Thành Đạt | Trường Đại Học Hồng Đức
+                    © {new Date().getFullYear()} {import.meta.env.VITE_TENTACGIA} | Trường Đại Học Hồng Đức
                 </p>
             </div>
         </footer>

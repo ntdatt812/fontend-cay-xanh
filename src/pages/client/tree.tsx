@@ -13,11 +13,8 @@ const TreePage = () => {
     useEffect(() => {
         if (id) {
             const fetchTreeById = async () => {
-                console.log("tree id = ", id)
                 const res = await getTreeByIdAPI(id);
                 if (res && res.data) {
-                    console.log(">>> check tree", res)
-
                     setTree(res.data)
                     setLoading(false)
                 } else {

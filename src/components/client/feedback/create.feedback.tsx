@@ -63,7 +63,6 @@ const ModalPostFeedback = (props: IProps) => {
         setIsSubmit(true)
         const { fullName, phoneNumber, emailFeedback, title, content } = values;
         const treeId: string = (treeFeedback?._id ?? "").trim()
-        console.log("check tree id:", treeId)
         const hinhanh = fileListThumbnail?.[0]?.name ?? "";
 
         const res = await createFeedbackAPI(

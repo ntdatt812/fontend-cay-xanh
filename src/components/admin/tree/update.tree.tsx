@@ -12,6 +12,7 @@ import { UploadRequestOption as RcCustomRequestOptions } from 'rc-upload/lib/int
 import { updateTreeAPI, uploadFileAPI } from '@/services/api';
 import { v4 as uuidv4 } from 'uuid';
 import MapPicker from '../map/LocationNewTree';
+import { Option } from 'antd/es/mentions';
 
 const { TextArea } = Input;
 type FileType = Parameters<GetProp<UploadProps, 'beforeUpload'>>[0];
@@ -36,7 +37,10 @@ type FieldType = {
     hinhanh: string;
     sohieu: string,
     hientrang: string,
-    chuvi: number
+    chuvi: number;
+    nuoc: string;
+    phan: string,
+    saubenh: string,
 };
 
 const UpdateTree = (props: IProps) => {
@@ -89,7 +93,10 @@ const UpdateTree = (props: IProps) => {
                 hinhanh: arrThumbnail,
                 sohieu: dataUpdate.sohieu,
                 hientrang: dataUpdate.hientrang,
-                chuvi: dataUpdate.chuvi
+                chuvi: dataUpdate.chuvi,
+                nuoc: dataUpdate.nuoc,
+                phan: dataUpdate.phan,
+                saubenh: dataUpdate.saubenh
             })
             setFileListThumbnail(arrThumbnail as any);
         }
@@ -99,13 +106,13 @@ const UpdateTree = (props: IProps) => {
     const onFinish: FormProps<FieldType>['onFinish'] = async (values) => {
         setIsSubmit(true)
         const { _id, tencayxanh, chieucao, hientrang,
-            khuvuc, lat, lng, mota, namtrong, sohieu, chuvi } = values;
+            khuvuc, lat, lng, mota, namtrong, sohieu, chuvi, nuoc, phan, saubenh } = values;
 
         const hinhanh = fileListThumbnail?.[0]?.name ?? "";
 
         const res = await updateTreeAPI(_id,
             tencayxanh, chieucao, hientrang, hinhanh,
-            khuvuc, lat, lng, mota, namtrong, sohieu, chuvi
+            khuvuc, lat, lng, mota, namtrong, sohieu, chuvi, nuoc, phan, saubenh
         );
         if (res && res.data) {
             message.success('Cập nhật cây thành công');
@@ -209,7 +216,7 @@ const UpdateTree = (props: IProps) => {
                 okText={"Cập nhật"}
                 cancelText={"Hủy"}
                 confirmLoading={isSubmit}
-                width={"80vw"}
+                width={"60vw"}
                 maskClosable={false}
             >
                 <Divider />
@@ -314,7 +321,7 @@ const UpdateTree = (props: IProps) => {
                                 <TextArea />
                             </Form.Item>
                         </Col>
-                        <Col span={24}>
+                        <Col span={12}>
                             <Form.Item<FieldType>
                                 labelCol={{ span: 24 }}
                                 label="Khu vực"
@@ -326,6 +333,36 @@ const UpdateTree = (props: IProps) => {
                                     allowClear
                                     options={listKhuVuc}
                                 />
+                            </Form.Item>
+                        </Col>
+                        <Col span={12}>
+                            <Form.Item<FieldType>
+                                labelCol={{ span: 24 }}
+                                label="Nước"
+                                name="nuoc"
+                                rules={[{ required: true, message: 'Vui lòng chọn nước!' }]}
+                            >
+                                <Input />
+                            </Form.Item>
+                        </Col>
+                        <Col span={12}>
+                            <Form.Item<FieldType>
+                                labelCol={{ span: 24 }}
+                                label="Phân bón"
+                                name="phan"
+                                rules={[{ required: true, message: 'Vui lòng chọn phân bón!' }]}
+                            >
+                                <Input />
+                            </Form.Item>
+                        </Col>
+                        <Col span={12}>
+                            <Form.Item<FieldType>
+                                labelCol={{ span: 24 }}
+                                label="Sâu bệnh"
+                                name="saubenh"
+                                rules={[{ required: true, message: 'Vui lòng chọn sâu bệnh!' }]}
+                            >
+                                <Input />
                             </Form.Item>
                         </Col>
                         <Col span={12}>
@@ -371,8 +408,6 @@ const UpdateTree = (props: IProps) => {
                                 label="Hình ảnh cây"
                                 name="hinhanh"
                                 rules={[{ required: true, message: 'Vui lòng nhập upload hình ảnh cây!' }]}
-
-                                //convert value from Upload => form
                                 valuePropName="fileList"
                                 getValueFromEvent={normFile}
                             >
@@ -396,32 +431,6 @@ const UpdateTree = (props: IProps) => {
                             </Form.Item>
 
                         </Col>
-                        {/* <Col span={12}>
-                            <Form.Item<FieldType>
-                                labelCol={{ span: 24 }}
-                                label="Ảnh Slider"
-                                name="slider"
-                                rules={[{ required: true, message: 'Vui lòng nhập upload slider!' }]}
-                                //convert value from Upload => form
-                                valuePropName="fileList"
-                                getValueFromEvent={normFile}
-                            >
-                                <Upload
-                                    multiple
-                                    listType="picture-card"
-                                    className="avatar-uploader"
-                                    customRequest={handleUploadFile}
-                                    beforeUpload={beforeUpload}
-                                    onChange={(info) => handleChange(info, 'slider')}
-                                    onPreview={handlePreview}
-                                >
-                                    <div>
-                                        {loadingSlider ? <LoadingOutlined /> : <PlusOutlined />}
-                                        <div style={{ marginTop: 8 }}>Upload</div>
-                                    </div>
-                                </Upload>
-                            </Form.Item>
-                        </Col> */}
                     </Row>
                 </Form>
 

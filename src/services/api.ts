@@ -95,12 +95,15 @@ export const updateTreeAPI = (
     mota: string,
     namtrong: number,
     sohieu: string,
-    chuvi: number) => {
+    chuvi: number,
+    nuoc: string,
+    phan: string,
+    saubenh: string) => {
     const urlBackend = `/api/v1/trees/${_id}`;
     return axios.patch<IBackendRes<IRegister>>(urlBackend,
         {
             tencayxanh, chieucao, hientrang, hinhanh,
-            khuvuc, lat, lng, mota, namtrong, sohieu, chuvi
+            khuvuc, lat, lng, mota, namtrong, sohieu, chuvi, nuoc, phan, saubenh
         })
 }
 

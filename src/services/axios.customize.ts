@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const instance = axios.create({
-    baseURL: import.meta.env.VITE_BACKEND_URL,// đây là url backend
+    baseURL: import.meta.env.VITE_BACKEND_URL,
     withCredentials: true // cho phép ứng dụng sử dụng cookies
 });
 
