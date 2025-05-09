@@ -31,7 +31,10 @@ type FieldType = {
     hinhanh: string;
     sohieu: string,
     hientrang: string,
-    chuvi: number
+    chuvi: number,
+    nuoc: string,
+    phan: string,
+    saubenh: string,
 };
 
 const CreateTree = (props: IProps) => {
@@ -86,13 +89,13 @@ const CreateTree = (props: IProps) => {
     const onFinish: FormProps<FieldType>['onFinish'] = async (values) => {
         setIsSubmit(true)
         const { tencayxanh, chieucao, hientrang,
-            khuvuc, lat, lng, mota, namtrong, sohieu, chuvi } = values;
+            khuvuc, lat, lng, mota, namtrong, sohieu, chuvi, nuoc, phan, saubenh } = values;
 
         const hinhanh = fileListThumbnail?.[0]?.name ?? "";
 
         const res = await createTreeAPI(
             tencayxanh, chieucao, hientrang, hinhanh,
-            khuvuc, lat, lng, mota, namtrong, sohieu, chuvi
+            khuvuc, lat, lng, mota, namtrong, sohieu, chuvi, nuoc, phan, saubenh
         );
         if (res && res.data) {
             message.success('Tạo cây mới thành công');
@@ -298,7 +301,7 @@ const CreateTree = (props: IProps) => {
                                 <TextArea />
                             </Form.Item>
                         </Col>
-                        <Col span={24}>
+                        <Col span={12}>
                             <Form.Item<FieldType>
                                 labelCol={{ span: 24 }}
                                 label="Khu vực"
@@ -310,6 +313,36 @@ const CreateTree = (props: IProps) => {
                                     allowClear
                                     options={listKhuVuc}
                                 />
+                            </Form.Item>
+                        </Col>
+                        <Col span={12}>
+                            <Form.Item<FieldType>
+                                labelCol={{ span: 24 }}
+                                label="Nước"
+                                name="nuoc"
+                                rules={[{ required: true, message: 'Vui lòng chọn nước!' }]}
+                            >
+                                <Input />
+                            </Form.Item>
+                        </Col>
+                        <Col span={12}>
+                            <Form.Item<FieldType>
+                                labelCol={{ span: 24 }}
+                                label="Phân bón"
+                                name="phan"
+                                rules={[{ required: true, message: 'Vui lòng chọn phân bón!' }]}
+                            >
+                                <Input />
+                            </Form.Item>
+                        </Col>
+                        <Col span={12}>
+                            <Form.Item<FieldType>
+                                labelCol={{ span: 24 }}
+                                label="Sâu bệnh"
+                                name="saubenh"
+                                rules={[{ required: true, message: 'Vui lòng chọn sâu bệnh!' }]}
+                            >
+                                <Input />
                             </Form.Item>
                         </Col>
                         <Col span={12}>

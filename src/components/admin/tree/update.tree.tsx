@@ -12,7 +12,7 @@ import { UploadRequestOption as RcCustomRequestOptions } from 'rc-upload/lib/int
 import { updateTreeAPI, uploadFileAPI } from '@/services/api';
 import { v4 as uuidv4 } from 'uuid';
 import MapPicker from '../map/LocationNewTree';
-import { Option } from 'antd/es/mentions';
+
 
 const { TextArea } = Input;
 type FileType = Parameters<GetProp<UploadProps, 'beforeUpload'>>[0];

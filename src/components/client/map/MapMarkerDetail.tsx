@@ -12,7 +12,7 @@ const MapMarkerDetail = ({ tree }: IProps) => {
 
     const map = useMap();
     const markerRef = useRef<L.Marker | null>(null); // Sử dụng useRef để tham chiếu đến Marker
-
+    console.log("check tree", tree)
     useEffect(() => {
         if (tree) {
             const markerLatLng: LatLngTuple = [+tree.lat, +tree.lng];

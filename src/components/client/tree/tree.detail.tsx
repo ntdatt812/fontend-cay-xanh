@@ -22,6 +22,16 @@ const TreeDetail = ({ tree, loading }: IProps) => {
 
     const columns: ProColumns<IHistoryTree>[] = [
         {
+            title: 'STT',
+            dataIndex: 'index',
+            disable: false,
+            render(dom, entity, index, action, schema) {
+                return (
+                    <>{index}</>
+                )
+            },
+        },
+        {
             title: 'Ngày cập nhật',
             dataIndex: 'updatedAt',
             render(dom, entity, index, action, schema) {
@@ -73,6 +83,7 @@ const TreeDetail = ({ tree, loading }: IProps) => {
             title: 'Người cập nhật',
             dataIndex: "updatedBy",
             render(dom, entity, index, action, schema) {
+                if (!entity.updatedBy) return <></>;
                 return (
                     <>{entity.updatedBy.name}</>
                 )
@@ -148,7 +159,7 @@ const TreeDetail = ({ tree, loading }: IProps) => {
                             <ProTable<IHistoryTree>
                                 columns={columns}
                                 dataSource={Array.isArray(tree.history) ? tree.history : []}
-                                rowKey="_id"
+                                rowKey="index"
                                 search={false}
                             />
                         </div>
